@@ -1,13 +1,11 @@
 import { ScreenWrapper } from '@components/ScreenWrapper';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 
 function HelloScreen() {
   return (
-    <ScreenWrapper withScrollView={false}>
-      <View style={styles.container}>
-        <Text>Hello World!</Text>
-      </View>
+    <ScreenWrapper contentContainerStyle={styles.container}>
+      <Text style={styles.paragraph}>Hello World!</Text>
     </ScreenWrapper>
   );
 }
@@ -16,7 +14,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+  },
+  paragraph: {
+    textAlign: 'center',
+    marginHorizontal: 16,
+    marginVertical: 16,
   },
 });
 

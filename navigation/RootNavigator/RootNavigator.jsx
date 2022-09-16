@@ -1,5 +1,6 @@
 import { HomeNavigator } from '@navigation/HomeNavigator';
 import { createStackNavigator } from '@react-navigation/stack';
+import { LoginScreen } from '@screens/LoginScreen';
 import { NotFoundScreen } from '@screens/NotFoundScreen';
 import { CustomNavigationBar } from '../CustomNavigationBar';
 
@@ -12,6 +13,13 @@ function RootNavigator() {
         header: (props) => <CustomNavigationBar {...props} />,
       }}
     >
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="Home"
         component={HomeNavigator}

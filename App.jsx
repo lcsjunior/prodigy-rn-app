@@ -8,7 +8,7 @@ import { PreferencesProvider } from '@providers/PreferencesProvider';
 import { StatusBar } from 'expo-status-bar';
 import { RootNavigator } from '@navigation/RootNavigator';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { themes } from '@utils/themes';
+import { themes } from '@core/themes';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();

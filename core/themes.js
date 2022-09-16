@@ -22,6 +22,7 @@ const themes = {
     ...CombinedDarkTheme,
     colors: {
       ...CombinedDarkTheme.colors,
+      // background: '#121212',
     },
   },
 };

@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 function ScreenWrapper({
   children,
   withScrollView = true,
-  style,
+  style = null,
   contentContainerStyle,
   ...rest
 }) {
@@ -35,7 +35,7 @@ function ScreenWrapper({
       </ScrollView>
     );
   }
-  return <View style={containerStyle}>{children}</View>;
+  return <View style={[containerStyle, style]}>{children}</View>;
 }
 
 const styles = StyleSheet.create({
