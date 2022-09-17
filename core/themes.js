@@ -22,7 +22,7 @@ const themes = {
     ...CombinedDarkTheme,
     colors: {
       ...CombinedDarkTheme.colors,
-      // background: '#121212',
+      background: '#121212',
     },
   },
 };
