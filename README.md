@@ -16,5 +16,5 @@ yarn android
 # or
 F5
 # or
-yarn start
+expo start
 ```

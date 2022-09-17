@@ -3,13 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SignInScreen } from '@screens/SignInScreen';
 import { NotFoundScreen } from '@screens/NotFoundScreen';
 import { CustomNavigationBar } from '../CustomNavigationBar';
-import { useContext } from 'react';
-import { AuthContext } from '@contexts/AuthContext';
+import { useAuth } from '@hooks/use-auth';
 
 const Stack = createStackNavigator();
 
 function RootNavigator() {
-  const { isSignedIn } = useContext(AuthContext);
+  const { isSignedIn } = useAuth();
 
   return (
     <Stack.Navigator

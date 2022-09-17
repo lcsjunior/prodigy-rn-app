@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://192.168.100.21:4002/',
+  baseURL: 'https://4a9e-2804-d45-ce9d-f700-9255-8a21-c0b3-d634.sa.ngrok.io/',
 });
 
 const jsonify = (resp) => resp.data;

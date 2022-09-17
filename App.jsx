@@ -3,14 +3,13 @@ import 'react-native-gesture-handler';
 import { Provider as PaperProvider } from 'react-native-paper';
 import * as SplashScreen from 'expo-splash-screen';
 import { linking } from './linking';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { PreferencesProvider } from '@providers/PreferencesProvider';
 import { StatusBar } from 'expo-status-bar';
 import { RootNavigator } from '@navigation/RootNavigator';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SWRConfig } from 'swr';
-import { AuthProvider } from '@providers/AuthProvider';
-import { usePreferences } from '@hooks/use-preferences';
+import { PreferencesContext } from '@contexts/PreferencesContext';
 import { useAuth } from '@hooks/use-auth';
 
 // Keep the splash screen visible while we fetch resources
@@ -18,8 +17,8 @@ SplashScreen.preventAutoHideAsync();
 
 function Main() {
   const [appIsReady, setAppIsReady] = useState(false);
-  const { isThemeDark, theme } = usePreferences();
-  const { getCurrentUser } = useAuth();
+  const { isThemeDark, theme } = useContext(PreferencesContext);
+  const { isLoading } = useAuth();
 
   const onReady = useCallback(async () => {
     if (appIsReady) {
@@ -28,12 +27,14 @@ function Main() {
   }, [appIsReady]);
 
   useEffect(() => {
-    async function prepare() {
-      await getCurrentUser();
-      setAppIsReady(true);
+    if (!isLoading) {
+      async function prepare() {
+        console.log('onReady');
+        setAppIsReady(true);
+      }
+      prepare();
     }
-    prepare();
-  }, [getCurrentUser]);
+  }, [isLoading]);
 
   if (!appIsReady) {
     return null;
@@ -53,12 +54,14 @@ function Main() {
 
 export default function App() {
   return (
-    <SWRConfig>
-      <AuthProvider>
-        <PreferencesProvider>
-          <Main />
-        </PreferencesProvider>
-      </AuthProvider>
+    <SWRConfig
+      value={{
+        provider: () => new Map(),
+      }}
+    >
+      <PreferencesProvider>
+        <Main />
+      </PreferencesProvider>
     </SWRConfig>
   );
 }

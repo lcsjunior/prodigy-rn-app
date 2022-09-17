@@ -10,6 +10,10 @@ function SignInScreen() {
   const [password, setPassword] = useState({ value: '', error: '' });
   const { onLogin } = useAuth();
 
+  const handleLogin = () => {
+    onLogin(username.value, password.value);
+  };
+
   return (
     <TextInputAvoidingView>
       <ScreenWrapper withScrollView={false} style={styles.container}>
@@ -20,9 +24,9 @@ function SignInScreen() {
             returnKeyType="next"
             value={username.value}
             onChangeText={(text) => setUsername({ value: text, error: '' })}
-            error={username.error}
+            error={!!username.error}
           />
-          <HelperText type="error" visible={username.error}>
+          <HelperText type="error" visible={!!username.error}>
             {username.error}
           </HelperText>
         </View>
@@ -34,13 +38,13 @@ function SignInScreen() {
             secureTextEntry
             value={password.value}
             onChangeText={(text) => setPassword({ value: text, error: '' })}
-            error={password.error}
+            error={!!password.error}
           />
-          <HelperText type="error" visible={password.error}>
+          <HelperText type="error" visible={!!password.error}>
             {username.error}
           </HelperText>
         </View>
-        <Button mode="contained" style={styles.submit} onPress={onLogin}>
+        <Button mode="contained" style={styles.submit} onPress={handleLogin}>
           Sign In
         </Button>
       </ScreenWrapper>
