@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   paragraph: {
     textAlign: 'center',
     marginHorizontal: 16,
-    marginVertical: 16,
   },
 });
 

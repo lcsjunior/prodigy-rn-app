@@ -3,65 +3,62 @@ import 'react-native-gesture-handler';
 import { Provider as PaperProvider } from 'react-native-paper';
 import * as SplashScreen from 'expo-splash-screen';
 import { linking } from './linking';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { PreferencesProvider } from '@providers/PreferencesProvider';
 import { StatusBar } from 'expo-status-bar';
 import { RootNavigator } from '@navigation/RootNavigator';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { themes } from '@core/themes';
+import { SWRConfig } from 'swr';
+import { AuthProvider } from '@providers/AuthProvider';
+import { usePreferences } from '@hooks/use-preferences';
+import { useAuth } from '@hooks/use-auth';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
-export default function App() {
+function Main() {
   const [appIsReady, setAppIsReady] = useState(false);
-  const [isThemeDark, setIsThemeDark] = useState(true);
+  const { isThemeDark, theme } = usePreferences();
+  const { getCurrentUser } = useAuth();
 
-  const theme = isThemeDark ? themes.dark : themes.light;
-
-  const handleOnReady = useCallback(async () => {
+  const onReady = useCallback(async () => {
     if (appIsReady) {
       await SplashScreen.hideAsync();
     }
   }, [appIsReady]);
 
-  const toggleTheme = useCallback(() => {
-    return setIsThemeDark(!isThemeDark);
-  }, [isThemeDark]);
-
-  const preferences = useMemo(
-    () => ({
-      toggleTheme,
-      isThemeDark,
-    }),
-    [toggleTheme, isThemeDark]
-  );
-
   useEffect(() => {
     async function prepare() {
+      await getCurrentUser();
       setAppIsReady(true);
     }
     prepare();
-  }, []);
+  }, [getCurrentUser]);
 
   if (!appIsReady) {
     return null;
   }
 
   return (
-    <PreferencesProvider value={preferences}>
-      <PaperProvider theme={theme}>
-        <SafeAreaProvider>
-          <NavigationContainer
-            theme={theme}
-            linking={linking}
-            onReady={handleOnReady}
-          >
-            <RootNavigator />
-          </NavigationContainer>
-          <StatusBar style={isThemeDark ? 'light' : 'dark'} />
-        </SafeAreaProvider>
-      </PaperProvider>
-    </PreferencesProvider>
+    <PaperProvider theme={theme}>
+      <SafeAreaProvider>
+        <NavigationContainer theme={theme} linking={linking} onReady={onReady}>
+          <RootNavigator />
+        </NavigationContainer>
+        <StatusBar style={isThemeDark ? 'light' : 'dark'} />
+      </SafeAreaProvider>
+    </PaperProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <SWRConfig>
+      <AuthProvider>
+        <PreferencesProvider>
+          <Main />
+        </PreferencesProvider>
+      </AuthProvider>
+    </SWRConfig>
   );
 }

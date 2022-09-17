@@ -1,12 +1,14 @@
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { TextInputAvoidingView } from '@components/TextInputAvoidingView/TextInputAvoidingView';
+import { useAuth } from '@hooks/use-auth';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, HelperText, TextInput } from 'react-native-paper';
 
-function LoginScreen() {
+function SignInScreen() {
   const [username, setUsername] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
+  const { onLogin } = useAuth();
 
   return (
     <TextInputAvoidingView>
@@ -38,12 +40,8 @@ function LoginScreen() {
             {username.error}
           </HelperText>
         </View>
-        <Button
-          mode="contained"
-          style={styles.submit}
-          onPress={() => console.log('Pressed')}
-        >
-          LOGIN
+        <Button mode="contained" style={styles.submit} onPress={onLogin}>
+          Sign In
         </Button>
       </ScreenWrapper>
     </TextInputAvoidingView>
@@ -64,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { LoginScreen };
+export { SignInScreen };

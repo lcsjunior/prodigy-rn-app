@@ -6,6 +6,5 @@ const initialState = {
 };
 
 const PreferencesContext = createContext(initialState);
-PreferencesContext.displayName = 'PreferencesContext';
 
 export { PreferencesContext };

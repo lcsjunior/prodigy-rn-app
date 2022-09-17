@@ -16,6 +16,7 @@ module.exports = (api) => {
             '@components': './components',
             '@contexts': './contexts',
             '@core': './core',
+            '@libs': './libs',
             '@navigation': './navigation',
             '@screens': './screens',
             '@hooks': './hooks',
