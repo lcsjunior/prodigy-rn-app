@@ -8,17 +8,19 @@ import {
   HelperText,
   Text,
   TextInput,
-  withTheme,
+  useTheme,
 } from 'react-native-paper';
 
 function SignInScreen({ theme }) {
-  const { colors } = theme;
+  const { colors } = useTheme();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [username, setUsername] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
   const { onLogin } = useAuth();
 
-  const handleLogin = () => {
-    onLogin(username.value, password.value);
+  const handleLogin = async () => {
+    setIsSubmitting(true);
+    await onLogin(username.value, password.value);
   };
 
   return (
@@ -67,8 +69,10 @@ function SignInScreen({ theme }) {
           mode="contained"
           style={styles.submitButton}
           onPress={handleLogin}
+          loading={isSubmitting}
+          disabled={isSubmitting}
         >
-          Sign In
+          {isSubmitting ? 'Signing In' : 'Sign In'}
         </Button>
         <View style={styles.signupWrapper}>
           <Text style={styles.baseText}>Don’t have an account? </Text>
@@ -126,6 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const EnhancedSignInScreen = withTheme(SignInScreen);
-
-export { EnhancedSignInScreen as SignInScreen };
+export { SignInScreen };
