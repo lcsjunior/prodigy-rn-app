@@ -2,10 +2,17 @@ import { ScreenWrapper } from '@components/ScreenWrapper';
 import { TextInputAvoidingView } from '@components/TextInputAvoidingView/TextInputAvoidingView';
 import { useAuth } from '@hooks/use-auth';
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Button, HelperText, Text, TextInput } from 'react-native-paper';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Button,
+  HelperText,
+  Text,
+  TextInput,
+  withTheme,
+} from 'react-native-paper';
 
-function SignInScreen() {
+function SignInScreen({ theme }) {
+  const { colors } = theme;
   const [username, setUsername] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
   const { onLogin } = useAuth();
@@ -21,29 +28,40 @@ function SignInScreen() {
         <View>
           <TextInput
             label="Username"
-            mode="outlined"
+            mode="flat"
             returnKeyType="next"
+            autoCapitalize="none"
             value={username.value}
             onChangeText={(text) => setUsername({ value: text, error: '' })}
             error={!!username.error}
           />
-          <HelperText type="error" visible={!!username.error}>
+          <HelperText type="error" padding="none" visible={!!username.error}>
             {username.error}
           </HelperText>
         </View>
         <View>
           <TextInput
             label="Password"
-            mode="outlined"
+            mode="flat"
             returnKeyType="done"
+            autoCapitalize="none"
             secureTextEntry
             value={password.value}
             onChangeText={(text) => setPassword({ value: text, error: '' })}
             error={!!password.error}
           />
-          <HelperText type="error" visible={!!password.error}>
-            {username.error}
-          </HelperText>
+          {!!password.error && (
+            <HelperText type="error" padding="none" visible={!!password.error}>
+              {password.error}
+            </HelperText>
+          )}
+        </View>
+        <View style={styles.forgotWrapper}>
+          <TouchableOpacity onPress={() => console.log('Pressed')}>
+            <Text style={[styles.baseText, { color: colors.primary }]}>
+              Forgot your password?
+            </Text>
+          </TouchableOpacity>
         </View>
         <Button
           mode="contained"
@@ -52,6 +70,20 @@ function SignInScreen() {
         >
           Sign In
         </Button>
+        <View style={styles.signupWrapper}>
+          <Text style={styles.baseText}>Don’t have an account? </Text>
+          <TouchableOpacity onPress={() => console.log('Pressed')}>
+            <Text
+              style={[
+                styles.baseText,
+                styles.signupText,
+                { color: colors.primary },
+              ]}
+            >
+              Sign up
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScreenWrapper>
     </TextInputAvoidingView>
   );
@@ -66,14 +98,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
   },
-  submitButton: {
-    paddingVertical: 2,
+  baseText: {
+    fontSize: 13,
   },
   titleText: {
     fontFamily: 'Astro-Space',
-    fontSize: 24,
-    color: '#e5e7eb',
+    fontSize: 32,
+    textAlign: 'center',
+    marginBottom: 24,
+  },
+  forgotWrapper: {
+    width: '100%',
+    alignItems: 'flex-end',
+    marginTop: 2,
+    marginBottom: 24,
+  },
+  submitButton: {
+    paddingVertical: 2,
+  },
+  signupWrapper: {
+    flexDirection: 'row',
+    marginTop: 6,
+    justifyContent: 'center',
+  },
+  signupText: {
+    fontWeight: 'bold',
   },
 });
 
-export { SignInScreen };
+const EnhancedSignInScreen = withTheme(SignInScreen);
+
+export { EnhancedSignInScreen as SignInScreen };
