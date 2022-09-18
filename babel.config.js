@@ -20,7 +20,6 @@ module.exports = (api) => {
             '@navigation': './navigation',
             '@screens': './screens',
             '@hooks': './hooks',
-            '@providers': './providers',
             '@utils': './utils',
           },
           extensions: ['.js', '.jsx', '.ts', '.tsx'],

@@ -3,38 +3,38 @@ import 'react-native-gesture-handler';
 import { Provider as PaperProvider } from 'react-native-paper';
 import * as SplashScreen from 'expo-splash-screen';
 import { linking } from './linking';
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { PreferencesProvider } from '@providers/PreferencesProvider';
+import { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { RootNavigator } from '@navigation/RootNavigator';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SWRConfig } from 'swr';
-import { PreferencesContext } from '@contexts/PreferencesContext';
 import { useAuth } from '@hooks/use-auth';
+import { usePreferences } from '@hooks/use-preferences';
+import { PreferencesProvider } from '@contexts/PreferencesContext';
+import { AuthProvider } from '@contexts/AuthContext';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
 function Main() {
   const [appIsReady, setAppIsReady] = useState(false);
-  const { isThemeDark, theme } = useContext(PreferencesContext);
+  const { isThemeDark, theme } = usePreferences();
   const { isLoading } = useAuth();
+
+  useEffect(() => {
+    if (!isLoading) {
+      async function prepare() {
+        setAppIsReady(true);
+      }
+      prepare();
+    }
+  }, [isLoading]);
 
   const onReady = useCallback(async () => {
     if (appIsReady) {
       await SplashScreen.hideAsync();
     }
   }, [appIsReady]);
-
-  useEffect(() => {
-    if (!isLoading) {
-      async function prepare() {
-        console.log('onReady');
-        setAppIsReady(true);
-      }
-      prepare();
-    }
-  }, [isLoading]);
 
   if (!appIsReady) {
     return null;
@@ -59,9 +59,11 @@ export default function App() {
         provider: () => new Map(),
       }}
     >
-      <PreferencesProvider>
-        <Main />
-      </PreferencesProvider>
+      <AuthProvider>
+        <PreferencesProvider>
+          <Main />
+        </PreferencesProvider>
+      </AuthProvider>
     </SWRConfig>
   );
 }
