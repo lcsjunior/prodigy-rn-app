@@ -1,7 +1,8 @@
 import axios from 'axios';
+import Constants from 'expo-constants';
 
 const instance = axios.create({
-  baseURL: 'http://api.prodigyio.com:9001/',
+  baseURL: Constants.manifest.extra.baseApiUrl,
 });
 
 const jsonify = (resp) => resp.data;

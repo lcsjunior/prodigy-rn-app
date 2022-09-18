@@ -12,6 +12,11 @@ import { useAuth } from '@hooks/use-auth';
 import { usePreferences } from '@hooks/use-preferences';
 import { PreferencesProvider } from '@contexts/PreferencesContext';
 import { AuthProvider } from '@contexts/AuthContext';
+import * as Font from 'expo-font';
+import { customFonts } from '@core/custom-fonts';
+import * as stringFormat from 'string-format';
+
+stringFormat.extend(String.prototype, {});
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -24,6 +29,7 @@ function Main() {
   useEffect(() => {
     if (!isLoading) {
       async function prepare() {
+        await Font.loadAsync(customFonts);
         setAppIsReady(true);
       }
       prepare();

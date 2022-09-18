@@ -3,7 +3,7 @@ import { TextInputAvoidingView } from '@components/TextInputAvoidingView/TextInp
 import { useAuth } from '@hooks/use-auth';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Button, HelperText, TextInput } from 'react-native-paper';
+import { Button, HelperText, Text, TextInput } from 'react-native-paper';
 
 function SignInScreen() {
   const [username, setUsername] = useState({ value: '', error: '' });
@@ -17,6 +17,7 @@ function SignInScreen() {
   return (
     <TextInputAvoidingView>
       <ScreenWrapper withScrollView={false} style={styles.container}>
+        <Text style={styles.titleText}>Prodigy IoT</Text>
         <View>
           <TextInput
             label="Username"
@@ -44,7 +45,11 @@ function SignInScreen() {
             {username.error}
           </HelperText>
         </View>
-        <Button mode="contained" style={styles.submit} onPress={handleLogin}>
+        <Button
+          mode="contained"
+          style={styles.submitButton}
+          onPress={handleLogin}
+        >
           Sign In
         </Button>
       </ScreenWrapper>
@@ -57,12 +62,17 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     width: '100%',
-    maxWidth: 340,
+    maxWidth: 320,
     justifyContent: 'center',
     alignSelf: 'center',
   },
-  submit: {
+  submitButton: {
     paddingVertical: 2,
+  },
+  titleText: {
+    fontFamily: 'Astro-Space',
+    fontSize: 24,
+    color: '#e5e7eb',
   },
 });
 

@@ -1,4 +1,5 @@
 import { api, fetcher } from '@libs/base-api';
+import { messages } from '@utils/messages';
 import { useEffect, useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
@@ -23,9 +24,7 @@ const useProvideAuth = () => {
       });
       await mutate();
     } catch (err) {
-      console.log(
-        `There has been a problem with your fetch operation: ${err.message}`
-      );
+      console.log(messages.fetchOperationFailed.format(err));
     }
   };
 
