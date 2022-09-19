@@ -8,23 +8,23 @@ import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
   Button,
   HelperText,
-  Snackbar,
   Text,
   TextInput,
   useTheme,
 } from 'react-native-paper';
+import { useToast } from 'react-native-toast-notifications';
 
 function SignInScreen() {
   const { colors } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isToastVisible, setIsToastVisible] = useState(false);
+  const toast = useToast();
   const { onLogin } = useAuth();
   const [username, setUsername] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
   const handleSubmit = async () => {
     Keyboard.dismiss();
-    setIsToastVisible(false);
+    toast.hideAll();
     let fails = false;
     if (isBlank(username.value)) {
       setUsername((state) => ({ ...state, error: messages.isRequired }));
@@ -39,7 +39,9 @@ function SignInScreen() {
       try {
         await onLogin(username.value, password.value);
       } catch (err) {
-        setIsToastVisible(true);
+        toast.show(messages.invalidUserOrPass, {
+          type: 'danger',
+        });
       }
       setIsSubmitting(false);
     }
@@ -112,17 +114,6 @@ function SignInScreen() {
             </Text>
           </TouchableOpacity>
         </View>
-        <Snackbar
-          mode="outlined"
-          visible={isToastVisible}
-          onDismiss={() => setIsToastVisible(false)}
-          action={{
-            label: 'Undo',
-            onPress: () => {},
-          }}
-        >
-          {messages.invalidUserOrPass}
-        </Snackbar>
       </ScreenWrapper>
     </TextInputAvoidingView>
   );

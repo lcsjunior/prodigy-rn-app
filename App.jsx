@@ -15,6 +15,7 @@ import { AuthProvider } from '@contexts/AuthContext';
 import * as Font from 'expo-font';
 import { customFonts } from '@core/custom-fonts';
 import * as stringFormat from 'string-format';
+import { ToastProvider } from 'react-native-toast-notifications';
 
 stringFormat.extend(String.prototype, {});
 
@@ -67,7 +68,9 @@ export default function App() {
     >
       <AuthProvider>
         <PreferencesProvider>
-          <Main />
+          <ToastProvider animationDuration={100}>
+            <Main />
+          </ToastProvider>
         </PreferencesProvider>
       </AuthProvider>
     </SWRConfig>
