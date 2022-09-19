@@ -5,7 +5,7 @@ import { Text } from 'react-native-paper';
 function HelloScreen() {
   return (
     <ScreenWrapper contentContainerStyle={styles.container}>
-      <Text style={styles.paragraph}>Hello World!</Text>
+      <Text style={styles.paragraph}>Hello world!</Text>
     </ScreenWrapper>
   );
 }

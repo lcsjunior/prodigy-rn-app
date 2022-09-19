@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 const useProvideAuth = () => {
-  const [isSignedIn, setIsSignedIn] = useState();
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const { data: user, mutate, error } = useSWR('/user', fetcher);
 
   const isLoading = !error && !user;
@@ -22,6 +23,7 @@ const useProvideAuth = () => {
         password,
       });
       await mutate();
+      setIsSignedIn(true);
     } catch (err) {
       console.log(`${messages.fetchOperationFailed}: ${err.message}`);
       throw err;
