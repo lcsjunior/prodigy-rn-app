@@ -24,7 +24,8 @@ const useProvideAuth = () => {
       });
       await mutate();
     } catch (err) {
-      console.log(messages.fetchOperationFailed.format(err));
+      console.log(`${messages.fetchOperationFailed}: ${err.message}`);
+      throw err;
     }
   };
 

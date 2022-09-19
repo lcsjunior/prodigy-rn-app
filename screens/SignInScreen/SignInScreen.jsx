@@ -1,26 +1,48 @@
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { TextInputAvoidingView } from '@components/TextInputAvoidingView/TextInputAvoidingView';
 import { useAuth } from '@hooks/use-auth';
+import { messages } from '@utils/messages';
+import { isBlank } from '@utils/string-helpers';
 import { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
   Button,
   HelperText,
+  Snackbar,
   Text,
   TextInput,
   useTheme,
 } from 'react-native-paper';
 
-function SignInScreen({ theme }) {
+function SignInScreen() {
   const { colors } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isToastVisible, setIsToastVisible] = useState(false);
+  const { onLogin } = useAuth();
   const [username, setUsername] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
-  const { onLogin } = useAuth();
 
-  const handleLogin = async () => {
-    setIsSubmitting(true);
-    await onLogin(username.value, password.value);
+  const handleSubmit = async () => {
+    Keyboard.dismiss();
+    setIsToastVisible(false);
+    let fails = false;
+    if (isBlank(username.value)) {
+      setUsername((state) => ({ ...state, error: messages.isRequired }));
+      fails = true;
+    }
+    if (isBlank(password.value)) {
+      setPassword((state) => ({ ...state, error: messages.isRequired }));
+      fails = true;
+    }
+    if (!fails) {
+      setIsSubmitting(true);
+      try {
+        await onLogin(username.value, password.value);
+      } catch (err) {
+        setIsToastVisible(true);
+      }
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -35,9 +57,10 @@ function SignInScreen({ theme }) {
             autoCapitalize="none"
             value={username.value}
             onChangeText={(text) => setUsername({ value: text, error: '' })}
+            onFocus={() => setUsername((state) => ({ ...state, error: '' }))}
             error={!!username.error}
           />
-          <HelperText type="error" padding="none" visible={!!username.error}>
+          <HelperText type="error" visible={!!username.error}>
             {username.error}
           </HelperText>
         </View>
@@ -50,10 +73,11 @@ function SignInScreen({ theme }) {
             secureTextEntry
             value={password.value}
             onChangeText={(text) => setPassword({ value: text, error: '' })}
+            onFocus={() => setPassword((state) => ({ ...state, error: '' }))}
             error={!!password.error}
           />
           {!!password.error && (
-            <HelperText type="error" padding="none" visible={!!password.error}>
+            <HelperText type="error" visible={!!password.error}>
               {password.error}
             </HelperText>
           )}
@@ -68,7 +92,7 @@ function SignInScreen({ theme }) {
         <Button
           mode="contained"
           style={styles.submitButton}
-          onPress={handleLogin}
+          onPress={handleSubmit}
           loading={isSubmitting}
           disabled={isSubmitting}
         >
@@ -88,6 +112,17 @@ function SignInScreen({ theme }) {
             </Text>
           </TouchableOpacity>
         </View>
+        <Snackbar
+          mode="outlined"
+          visible={isToastVisible}
+          onDismiss={() => setIsToastVisible(false)}
+          action={{
+            label: 'Undo',
+            onPress: () => {},
+          }}
+        >
+          {messages.invalidUserOrPass}
+        </Snackbar>
       </ScreenWrapper>
     </TextInputAvoidingView>
   );
