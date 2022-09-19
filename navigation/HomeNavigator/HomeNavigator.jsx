@@ -1,7 +1,7 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { HelloScreen } from '@screens/HelloScreen';
 import { SettingsScreen } from '@screens/SettingsScreen';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -9,12 +9,12 @@ function HomeNavigator() {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Hello"
+        name="Panels"
         component={HelloScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
-            <Ionicons name="home" color={color} size={26} />
+            <SimpleLineIcons name="home" color={color} size={20} />
           ),
         }}
       />
@@ -24,7 +24,7 @@ function HomeNavigator() {
         options={{
           tabBarLabel: 'Settings',
           tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-list" color={color} size={26} />
+            <SimpleLineIcons name="settings" color={color} size={20} />
           ),
         }}
       />

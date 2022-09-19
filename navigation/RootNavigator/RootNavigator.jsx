@@ -2,8 +2,8 @@ import { HomeNavigator } from '@navigation/HomeNavigator';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SignInScreen } from '@screens/SignInScreen';
 import { NotFoundScreen } from '@screens/NotFoundScreen';
-import { CustomNavigationBar } from '../CustomNavigationBar';
 import { useAuth } from '@hooks/use-auth';
+import { CustomNavigationBar } from '@navigation/CustomNavigationBar';
 
 const Stack = createStackNavigator();
 
@@ -22,7 +22,6 @@ function RootNavigator() {
           component={HomeNavigator}
           options={{
             title: 'Home',
-            // headerShown: false,
           }}
         />
       ) : (

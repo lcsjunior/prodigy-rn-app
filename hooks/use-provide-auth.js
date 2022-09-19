@@ -1,12 +1,11 @@
 import { api, fetcher } from '@libs/base-api';
 import { messages } from '@utils/messages';
 import { useEffect, useState } from 'react';
-import useSWR, { useSWRConfig } from 'swr';
+import useSWR from 'swr';
 
 const useProvideAuth = () => {
   const [isSignedIn, setIsSignedIn] = useState();
   const { data: user, mutate, error } = useSWR('/user', fetcher);
-  const { cache } = useSWRConfig();
 
   const isLoading = !error && !user;
 
@@ -32,7 +31,6 @@ const useProvideAuth = () => {
   const onLogout = async () => {
     await api.post('/logout');
     setIsSignedIn(false);
-    cache.clear();
   };
 
   return {

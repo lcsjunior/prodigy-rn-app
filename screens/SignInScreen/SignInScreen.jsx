@@ -134,6 +134,9 @@ const styles = StyleSheet.create({
   titleText: {
     fontFamily: 'Astro-Space',
     fontSize: 32,
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
+    textShadowColor: '#171717',
     textAlign: 'center',
     marginBottom: 24,
   },

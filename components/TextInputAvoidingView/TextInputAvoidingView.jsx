@@ -1,16 +1,14 @@
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 
 function TextInputAvoidingView({ children }) {
-  if (Platform.OS === 'ios') {
+  return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior="padding"
-      keyboardVerticalOffset={80}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       {children}
-    </KeyboardAvoidingView>;
-  }
-  return children;
+    </KeyboardAvoidingView>
+  );
 }
 
 const styles = StyleSheet.create({
