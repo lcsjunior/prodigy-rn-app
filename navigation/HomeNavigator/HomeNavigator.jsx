@@ -1,7 +1,7 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { HelloScreen } from '@screens/HelloScreen';
-import { SettingsScreen } from '@screens/SettingsScreen';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
+import { SettingsNavigator } from '@navigation/SettingsNavigator';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -20,7 +20,7 @@ function HomeNavigator() {
       />
       <Tab.Screen
         name="Settings"
-        component={SettingsScreen}
+        component={SettingsNavigator}
         options={{
           tabBarLabel: 'Settings',
           tabBarIcon: ({ color }) => (

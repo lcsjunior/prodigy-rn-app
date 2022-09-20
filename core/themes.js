@@ -16,6 +16,7 @@ const themes = {
     ...CombinedDefaultTheme,
     colors: {
       ...CombinedDefaultTheme.colors,
+      primary: '#2563eb',
     },
   },
   dark: {

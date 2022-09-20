@@ -5,7 +5,6 @@ import useSWR from 'swr';
 
 const useProvideAuth = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
   const { data: user, mutate, error } = useSWR('/user', fetcher);
 
   const isLoading = !error && !user;

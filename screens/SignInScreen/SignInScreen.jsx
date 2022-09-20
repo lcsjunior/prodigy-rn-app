@@ -98,7 +98,7 @@ function SignInScreen() {
           loading={isSubmitting}
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Signing In' : 'Sign In'}
+          {isSubmitting ? 'Signing in' : 'Sign in'}
         </Button>
         <View style={styles.signupWrapper}>
           <Text style={styles.baseText}>Don’t have an account? </Text>
@@ -134,9 +134,6 @@ const styles = StyleSheet.create({
   titleText: {
     fontFamily: 'Astro-Space',
     fontSize: 32,
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 1,
-    textShadowColor: '#171717',
     textAlign: 'center',
     marginBottom: 24,
   },
