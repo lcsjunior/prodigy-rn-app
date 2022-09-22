@@ -1,20 +1,19 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { HelloScreen } from '@screens/HelloScreen';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import { CloudSetIcon } from '@components/Icons';
+import { CloudSetIcon, HomeIcon } from '@components/Icons';
 
 const Tab = createMaterialBottomTabNavigator();
 
 function HomeNavigator() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator shifting>
       <Tab.Screen
         name="Panels"
         component={HelloScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
-            <AntDesign name="home" color={color} size={24} />
+            <HomeIcon width="24" height="24" color={color} />
           ),
         }}
       />
@@ -24,7 +23,8 @@ function HomeNavigator() {
         options={{
           tabBarLabel: 'Channels',
           tabBarIcon: ({ color }) => (
-            <CloudSetIcon width={26} height={26} stroke={color} />
+            // <MaterialIcons name="settings" color={color} size={26} />
+            <CloudSetIcon width="24" height="24" color={color} />
           ),
         }}
       />
