@@ -1,7 +1,7 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { HelloScreen } from '@screens/HelloScreen';
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
-import { SettingsNavigator } from '@navigation/SettingsNavigator';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import { CloudSetIcon } from '@components/Icons';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -14,17 +14,17 @@ function HomeNavigator() {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
-            <SimpleLineIcons name="home" color={color} size={20} />
+            <AntDesign name="home" color={color} size={24} />
           ),
         }}
       />
       <Tab.Screen
-        name="Settings"
-        component={SettingsNavigator}
+        name="Channels"
+        component={HelloScreen}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: 'Channels',
           tabBarIcon: ({ color }) => (
-            <SimpleLineIcons name="settings" color={color} size={20} />
+            <CloudSetIcon width={26} height={26} stroke={color} />
           ),
         }}
       />
