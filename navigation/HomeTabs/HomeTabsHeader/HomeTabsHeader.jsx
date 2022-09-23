@@ -1,11 +1,18 @@
 import { useDisclose } from '@hooks/use-disclosure';
+import { useLinkTo } from '@react-navigation/native';
 import { Platform, StyleSheet } from 'react-native';
 import { Appbar, Menu } from 'react-native-paper';
 
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
-function CustomNavigationBar() {
+function HomeTabsHeader() {
   const { isOpen: isMoreMenuOpen, onToggle: onMoreMenuToggle } = useDisclose();
+  const linkTo = useLinkTo();
+
+  const handleMenuItemAccountPress = () => {
+    onMoreMenuToggle();
+    linkTo('/useraccount');
+  };
 
   return (
     <Appbar.Header>
@@ -21,7 +28,7 @@ function CustomNavigationBar() {
           />
         }
       >
-        <Menu.Item onPress={() => {}} title="Account" />
+        <Menu.Item title="My Account" onPress={handleMenuItemAccountPress} />
       </Menu>
     </Appbar.Header>
   );
@@ -36,4 +43,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { CustomNavigationBar };
+export { HomeTabsHeader };

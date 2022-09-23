@@ -1,5 +1,6 @@
 const config = {
   screens: {
+    UserAccount: 'useraccount',
     NotFound: '*',
   },
 };

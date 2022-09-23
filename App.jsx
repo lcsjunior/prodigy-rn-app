@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { linking } from './linking';
 import { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { RootNavigator } from '@navigation/RootNavigator';
+import { RootStack } from '@navigation/RootStack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SWRConfig } from 'swr';
 import { usePreferences } from '@hooks/use-preferences';
@@ -49,7 +49,7 @@ function Main() {
             linking={linking}
             onReady={onReady}
           >
-            <RootNavigator />
+            <RootStack />
           </NavigationContainer>
           <StatusBar style={isThemeDark ? 'light' : 'dark'} />
         </SafeAreaProvider>

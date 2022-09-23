@@ -6,25 +6,14 @@ import Svg, { Path, G } from 'react-native-svg';
 function HomeIcon({ color = '#000', ...props }) {
   return (
     <Svg
-      height="20px"
-      id="Layer_1"
-      viewBox="0 0 20 20"
-      width="20px"
+      viewBox="0 0 24 24"
       xmlSpace="preserve"
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="new 0 0 20 20"
+      enableBackground="new 0 0 24 24"
       {...props}
     >
-      <G opacity={0}>
-        <Path className="st1" d="M-2 -2H-1V21H-2z" />
-        <Path
-          className="st1"
-          transform="rotate(90 10 21.5)"
-          d="M9.5 9.5H10.5V33.5H9.5z"
-        />
-      </G>
       <Path
-        d="M19.99 6.313L10 .071.012 6.313l1.06 1.697L2 7.43V17c0 1.103.897 2 2 2h5v-8h2v8h5c1.103 0 2-.897 2-2V7.43l.929.58 1.06-1.697zM16 17h-3v-6c0-1.103-.897-2-2-2H9c-1.103 0-2 .897-2 2v6H4V6.18l6-3.75 6 3.75V17z"
+        d="M23.769 11.064L13.196.491c-.643-.644-1.768-.645-2.413 0L.136 11.138a.499.499 0 00.354.854h1.5v11.5a.5.5 0 00.5.5h6a.5.5 0 00.5-.5v-8.5h6v8.5a.5.5 0 00.5.5h6a.5.5 0 00.5-.5V11.991h1.51a.496.496 0 00.51-.5.503.503 0 00-.241-.427z"
         fill={color}
       />
     </Svg>
