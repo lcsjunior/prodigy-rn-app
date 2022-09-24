@@ -1,33 +1,32 @@
-import { HomeTabs, HomeTabsHeader } from '@navigation/HomeTabs';
+import { HomeTabs } from '@navigation/HomeTabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SignInScreen } from '@screens/SignInScreen';
 import { NotFoundScreen } from '@screens/NotFoundScreen';
 import { useAuth } from '@hooks/use-auth';
-import { CustomStackHeader } from '@navigation/CustomStackHeader';
+import {
+  CustomNavigationBar,
+  getHeaderTitle,
+} from '@navigation/CustomNavigationBar';
 import { UserAccountScreen } from '@screens/UserAccountScreen';
 
 const Stack = createStackNavigator();
 
-function RootStack() {
+function RootNavigator() {
   const { isSignedIn } = useAuth();
 
   return (
     <Stack.Navigator
       screenOptions={{
-        header: (props) => <CustomStackHeader {...props} />,
+        header: (props) => <CustomNavigationBar {...props} />,
       }}
     >
       {isSignedIn ? (
         <Stack.Group>
-          <Stack.Screen
-            name="Home"
-            component={HomeTabs}
-            options={{ header: (props) => <HomeTabsHeader {...props} /> }}
-          />
+          <Stack.Screen name="Home" component={HomeTabs} />
           <Stack.Screen
             name="UserAccount"
             component={UserAccountScreen}
-            options={{ title: 'My Account' }}
+            options={{ title: 'Account' }}
           />
         </Stack.Group>
       ) : (
@@ -48,4 +47,4 @@ function RootStack() {
   );
 }
 
-export { RootStack };
+export { RootNavigator };
