@@ -2,7 +2,7 @@ import { ScreenWrapper } from '@components/ScreenWrapper';
 import { useAuth } from '@hooks/use-auth';
 import { useGlobal } from '@hooks/use-global';
 import { StyleSheet } from 'react-native';
-import { Avatar, Button, List } from 'react-native-paper';
+import { Avatar, Button, List, MD2Colors } from 'react-native-paper';
 import sleep from 'sleep-promise';
 
 function SettingsScreen() {
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
   },
   avatar: {
     margin: 8,
+    backgroundColor: MD2Colors.blue700,
   },
 });
 
