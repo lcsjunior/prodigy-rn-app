@@ -1,16 +1,8 @@
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { useAuth } from '@hooks/use-auth';
 import { useGlobal } from '@hooks/use-global';
-import { StyleSheet, View } from 'react-native';
-import {
-  Avatar,
-  Button,
-  Caption,
-  Card,
-  Chip,
-  List,
-  Text,
-} from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { Avatar, Button, List } from 'react-native-paper';
 import sleep from 'sleep-promise';
 
 function SettingsScreen() {
