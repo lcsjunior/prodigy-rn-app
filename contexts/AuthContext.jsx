@@ -6,7 +6,6 @@ const AuthContext = createContext();
 function AuthProvider({ children }) {
   const auth = useProvideAuth();
 
-  console.log('Authing...');
   if (auth.isLoading) {
     return null;
   }

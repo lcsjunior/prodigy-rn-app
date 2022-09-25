@@ -22,7 +22,7 @@ function HomeTabs() {
         name="ChannelsTab"
         component={ChannelsScreen}
         options={{
-          tabBarLabel: 'Channels',
+          tabBarLabel: 'My Channels',
           tabBarIcon: ({ color }) => (
             <CloudSetIcon width="24" height="24" color={color} />
           ),

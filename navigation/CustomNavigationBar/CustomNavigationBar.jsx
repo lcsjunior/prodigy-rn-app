@@ -6,8 +6,7 @@ import { Appbar, Menu } from 'react-native-paper';
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
 function CustomNavigationBar({ navigation, back, options, route }) {
-  // const routeTabName = getFocusedRouteNameFromRoute(route) || 'HomeTab';
-  const { isOpen: isMoreMenuOpen, onToggle: onMoreMenuToggle } = useDisclose();
+  const { isOpen: isMenuOpen, onToggle: onMenuToggle } = useDisclose();
   const linkTo = useLinkTo();
 
   if (route.name === 'Home') {
@@ -15,21 +14,21 @@ function CustomNavigationBar({ navigation, back, options, route }) {
       <Appbar.Header>
         <Appbar.Content title="Prodigy IoT" titleStyle={styles.titleText} />
         <Menu
-          visible={isMoreMenuOpen}
-          onDismiss={onMoreMenuToggle}
+          visible={isMenuOpen}
+          onDismiss={onMenuToggle}
           anchor={
             <Appbar.Action
               icon={MORE_ICON}
               color="white"
-              onPress={onMoreMenuToggle}
+              onPress={onMenuToggle}
             />
           }
         >
           <Menu.Item
-            title="Account"
+            title="Settings"
             onPress={() => {
-              onMoreMenuToggle();
-              linkTo('/useraccount');
+              onMenuToggle();
+              linkTo('/settings');
             }}
           />
         </Menu>

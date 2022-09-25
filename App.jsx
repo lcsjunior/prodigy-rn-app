@@ -14,8 +14,8 @@ import { AuthProvider } from '@contexts/AuthContext';
 import * as Font from 'expo-font';
 import { customFonts } from '@core/custom-fonts';
 import { ToastProvider } from 'react-native-toast-notifications';
+import { GlobalProvider } from '@contexts/GlobalContext';
 
-// Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
 function Main() {
@@ -41,20 +41,22 @@ function Main() {
   }
 
   return (
-    <PaperProvider theme={theme}>
-      <ToastProvider animationDuration={100}>
-        <SafeAreaProvider>
-          <NavigationContainer
-            theme={theme}
-            linking={linking}
-            onReady={onReady}
-          >
-            <RootNavigator />
-          </NavigationContainer>
-          <StatusBar style={isThemeDark ? 'light' : 'dark'} />
-        </SafeAreaProvider>
-      </ToastProvider>
-    </PaperProvider>
+    <ToastProvider animationDuration={100}>
+      <PaperProvider theme={theme}>
+        <GlobalProvider>
+          <SafeAreaProvider>
+            <NavigationContainer
+              theme={theme}
+              linking={linking}
+              onReady={onReady}
+            >
+              <RootNavigator />
+            </NavigationContainer>
+            <StatusBar style={isThemeDark ? 'light' : 'dark'} />
+          </SafeAreaProvider>
+        </GlobalProvider>
+      </PaperProvider>
+    </ToastProvider>
   );
 }
 

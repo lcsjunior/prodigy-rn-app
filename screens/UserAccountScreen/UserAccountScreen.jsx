@@ -5,7 +5,7 @@ import { Text } from 'react-native-paper';
 function UserAccountScreen() {
   return (
     <ScreenWrapper contentContainerStyle={styles.container}>
-      <Text style={styles.paragraph}>Account</Text>
+      <Text style={styles.paragraph}>My Account</Text>
     </ScreenWrapper>
   );
 }
