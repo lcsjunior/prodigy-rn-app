@@ -22,7 +22,7 @@ function SignInScreen() {
   const [username, setUsername] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
-  const handleSubmit = async () => {
+  const handleSignInPress = async () => {
     Keyboard.dismiss();
     toast.hideAll();
     let fails = false;
@@ -93,8 +93,8 @@ function SignInScreen() {
         </View>
         <Button
           mode="contained"
-          style={styles.submitButton}
-          onPress={handleSubmit}
+          style={styles.signInButton}
+          onPress={handleSignInPress}
           loading={isSubmitting}
           disabled={isSubmitting}
         >
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginBottom: 24,
   },
-  submitButton: {
+  signInButton: {
     paddingVertical: 2,
   },
   signupWrapper: {
