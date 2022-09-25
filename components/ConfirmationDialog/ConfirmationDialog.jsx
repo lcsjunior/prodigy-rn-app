@@ -15,8 +15,8 @@ function ConfirmationDialog(props, ref) {
   };
 
   const handleCancel = () => {
-    deferRef.resolve(false);
     onClose();
+    deferRef.resolve(false);
   };
 
   const confirm = (options) => {

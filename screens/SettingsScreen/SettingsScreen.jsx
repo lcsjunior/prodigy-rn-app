@@ -3,9 +3,10 @@ import { useAuth } from '@hooks/use-auth';
 import { useGlobal } from '@hooks/use-global';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
+import sleep from 'sleep-promise';
 
 function SettingsScreen() {
-  const { confirm } = useGlobal();
+  const { confirm, progressDialog } = useGlobal();
   const { onLogout } = useAuth();
 
   return (
@@ -18,7 +19,10 @@ function SettingsScreen() {
               message: 'Are you sure you want to sign out?',
             });
             if (confirmed) {
+              progressDialog.show();
+              await sleep(1000);
               await onLogout();
+              progressDialog.hide();
             }
           } catch (err) {}
         }}
@@ -32,7 +36,6 @@ function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     width: '100%',
     maxWidth: 340,
     alignSelf: 'center',
