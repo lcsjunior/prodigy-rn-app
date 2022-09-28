@@ -1,6 +1,7 @@
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { useAuth } from '@hooks/use-auth';
 import { useGlobal } from '@hooks/use-global';
+import { getUserInitiais } from '@utils/string-helpers';
 import { StyleSheet } from 'react-native';
 import { Avatar, Button, List, MD2Colors } from 'react-native-paper';
 import sleep from 'sleep-promise';
@@ -10,18 +11,8 @@ function SettingsScreen() {
   const { onLogout, user } = useAuth();
 
   const { username, firstName = '', lastName = '' } = user;
-  const fullname = `${firstName} ${lastName}`.trim();
-
-  const getAvatarLabel = () => {
-    let label = username[0];
-    if (firstName) {
-      label = firstName[0];
-    }
-    if (lastName) {
-      label += lastName[0];
-    }
-    return label.toUpperCase();
-  };
+  const fullname = `${firstName || ''} ${lastName || ''}`.trim();
+  const initials = getUserInitiais(fullname, username);
 
   const handleSignOutPress = async () => {
     try {
@@ -32,7 +23,6 @@ function SettingsScreen() {
         progressDialog.show();
         await sleep(1000);
         await onLogout();
-        await sleep(500);
         progressDialog.hide();
       }
     } catch (err) {}
@@ -43,11 +33,7 @@ function SettingsScreen() {
       <List.Section title="My Account">
         <List.Item
           left={() => (
-            <Avatar.Text
-              style={styles.avatar}
-              size={40}
-              label={getAvatarLabel()}
-            />
+            <Avatar.Text style={styles.avatar} size={40} label={initials} />
           )}
           title={username}
           description={fullname}

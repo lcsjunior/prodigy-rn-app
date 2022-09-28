@@ -14,7 +14,7 @@ Start development mode:
 ```bash
 yarn android
 # or
-F5
-# or
 expo start
+# or
+F5
 ```
