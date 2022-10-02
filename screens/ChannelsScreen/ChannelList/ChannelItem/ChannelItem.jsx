@@ -1,40 +1,32 @@
-import { Tip } from '@components/Tip';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useDisclose } from '@hooks/use-disclosure';
-import { messages } from '@utils/messages';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Card, MD2Colors, Text, useTheme } from 'react-native-paper';
 
 function ChannelItem({ channel }) {
   const { channelId, chData } = channel;
   const { colors } = useTheme();
-  const { isOpen: isTipOpen, onToggle: onTipToggle } = useDisclose(false);
 
   return (
-    <Card style={styles.card} mode="elevated">
+    <Card
+      style={styles.card}
+      mode="elevated"
+      onPress={() => {
+        console.log(666);
+      }}
+    >
       <Card.Content>
         <View style={styles.titleWrapper}>
-          <Text numberOfLines={1} style={styles.title}>
-            {chData?.name || 'Unknown'}
-          </Text>
           {!chData && (
-            <Tip
-              isVisible={isTipOpen}
-              content={
-                <Text style={styles.tip}>{messages.channelNotFound}</Text>
-              }
-              onClose={onTipToggle}
-              placement="top"
-            >
-              <TouchableWithoutFeedback onPress={onTipToggle}>
-                <Ionicons
-                  name="warning-outline"
-                  size={20}
-                  color={colors.error}
-                />
-              </TouchableWithoutFeedback>
-            </Tip>
+            <Ionicons
+              name="warning-outline"
+              size={20}
+              color={colors.error}
+              style={styles.warnIcon}
+            />
           )}
+          <Text numberOfLines={1} style={styles.title}>
+            {chData?.name || 'Channel not found'}
+          </Text>
         </View>
         <Text style={styles.description}>Channel ID: {channelId}</Text>
       </Card.Content>
@@ -50,7 +42,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   title: {
     fontSize: 16,
@@ -62,8 +53,8 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     color: MD2Colors.grey400,
   },
-  tip: {
-    color: MD2Colors.black,
+  warnIcon: {
+    marginRight: 6,
   },
 });
 
