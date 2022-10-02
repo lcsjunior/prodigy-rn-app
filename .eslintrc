@@ -27,6 +27,7 @@
     "import/no-unresolved": "off",
     "import/order": "off",
     "comma-dangle": "off",
+    "no-restricted-syntax": "off",
     "react/jsx-no-useless-fragment": "warn",
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "no-unused-vars": [

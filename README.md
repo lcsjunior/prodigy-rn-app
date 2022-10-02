@@ -18,3 +18,11 @@ expo start
 # or
 F5
 ```
+
+Connect to Reactotron:
+
+```bash
+adb reverse tcp:9090 tcp:9090
+```
+
+See: <https://github.com/infinitered/reactotron/blob/master/docs/quick-start-react-native.md>

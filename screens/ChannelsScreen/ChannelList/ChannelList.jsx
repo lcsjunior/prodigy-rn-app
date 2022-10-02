@@ -19,6 +19,7 @@ function ChannelList({ channels }) {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
+    padding: 4,
   },
 });
 
