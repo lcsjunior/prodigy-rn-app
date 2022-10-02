@@ -1,12 +1,14 @@
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Paragraph } from 'react-native-paper';
 
 function NotFoundScreen({ route }) {
   return (
     <ScreenWrapper contentContainerStyle={styles.container}>
-      <Text style={styles.paragraph}>Screen not found</Text>
-      {__DEV__ && <Text style={styles.paragraph}>{JSON.stringify(route)}</Text>}
+      <Paragraph style={styles.paragraph}>Screen not found</Paragraph>
+      {__DEV__ && (
+        <Paragraph style={styles.paragraph}>{JSON.stringify(route)}</Paragraph>
+      )}
     </ScreenWrapper>
   );
 }
@@ -14,10 +16,10 @@ function NotFoundScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
     justifyContent: 'center',
   },
   paragraph: {
-    textAlign: 'center',
     marginHorizontal: 16,
   },
 });

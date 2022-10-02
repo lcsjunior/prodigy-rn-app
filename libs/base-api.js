@@ -9,4 +9,4 @@ const jsonify = (resp) => resp.data;
 
 const fetcher = (url) => instance.get(url).then(jsonify);
 
-export { instance as api, fetcher };
+export { instance as baseApi, fetcher };

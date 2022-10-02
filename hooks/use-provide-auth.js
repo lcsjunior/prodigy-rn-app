@@ -1,13 +1,11 @@
-import { api, fetcher } from '@libs/base-api';
+import { baseApi, fetcher } from '@libs/base-api';
 import { messages } from '@utils/messages';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 const useProvideAuth = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const { data: user, mutate, error } = useSWR('/user', fetcher);
-
-  const isLoading = !error && !user;
+  const { data: user, mutate: mutateUser, error } = useSWR('/user', fetcher);
 
   useEffect(() => {
     if (user) {
@@ -17,11 +15,11 @@ const useProvideAuth = () => {
 
   const onLogin = async (username, password) => {
     try {
-      await api.post('/login', {
+      await baseApi.post('/login', {
         username,
         password,
       });
-      await mutate();
+      await mutateUser();
       setIsSignedIn(true);
     } catch (err) {
       console.log(`${messages.fetchOperationFailed}: ${err.message}`);
@@ -30,13 +28,13 @@ const useProvideAuth = () => {
   };
 
   const onLogout = async () => {
-    await api.post('/logout');
+    await baseApi.post('/logout');
     setIsSignedIn(false);
   };
 
   return {
     user,
-    isLoading,
+    isLoading: !error && !user,
     isSignedIn,
     onLogin,
     onLogout,

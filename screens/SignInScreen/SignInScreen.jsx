@@ -53,7 +53,7 @@ function SignInScreen() {
         <Text style={styles.titleText}>Prodigy IoT</Text>
         <View>
           <TextInput
-            label="Username"
+            label="Username or email address"
             mode="flat"
             returnKeyType="next"
             autoCapitalize="none"
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     width: '100%',
-    maxWidth: 340,
+    maxWidth: 330,
     justifyContent: 'center',
     alignSelf: 'center',
   },

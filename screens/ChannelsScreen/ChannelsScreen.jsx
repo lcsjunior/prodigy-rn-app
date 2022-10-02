@@ -1,23 +1,20 @@
+import { ScreenActivityIndicator } from '@components/ScreenActivityIndicator';
 import { ScreenWrapper } from '@components/ScreenWrapper';
-import { StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
+import { useChannels } from '@hooks/use-channels';
+import { ChannelList } from './ChannelList';
 
 function ChannelsScreen() {
+  const { channels, isLoading } = useChannels();
+
+  if (isLoading) {
+    return <ScreenActivityIndicator />;
+  }
+
   return (
-    <ScreenWrapper contentContainerStyle={styles.container}>
-      <Text style={styles.paragraph}>Channels</Text>
+    <ScreenWrapper withScrollView={false}>
+      <ChannelList channels={channels} />
     </ScreenWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  paragraph: {
-    textAlign: 'center',
-  },
-});
 
 export { ChannelsScreen };
