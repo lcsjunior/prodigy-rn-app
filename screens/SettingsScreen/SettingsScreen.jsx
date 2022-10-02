@@ -3,12 +3,13 @@ import { useAuth } from '@hooks/use-auth';
 import { useGlobal } from '@hooks/use-global';
 import { getUserInitiais } from '@utils/string-helpers';
 import { StyleSheet } from 'react-native';
-import { Avatar, Button, List, MD2Colors } from 'react-native-paper';
+import { Avatar, Button, List, useTheme } from 'react-native-paper';
 import sleep from 'sleep-promise';
 
 function SettingsScreen() {
   const { confirm, progressDialog } = useGlobal();
   const { onLogout, user } = useAuth();
+  const { colors } = useTheme();
 
   const { username, firstName = '', lastName = '' } = user;
   const fullname = `${firstName || ''} ${lastName || ''}`.trim();
@@ -33,7 +34,11 @@ function SettingsScreen() {
       <List.Section title="My Account">
         <List.Item
           left={() => (
-            <Avatar.Text style={styles.avatar} size={40} label={initials} />
+            <Avatar.Text
+              style={[styles.avatar, { backgroundColor: colors.accent }]}
+              size={80}
+              label={initials}
+            />
           )}
           title={username}
           description={fullname}
@@ -59,7 +64,6 @@ const styles = StyleSheet.create({
   },
   avatar: {
     margin: 8,
-    backgroundColor: MD2Colors.blue700,
   },
 });
 

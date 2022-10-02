@@ -3,6 +3,7 @@ import {
   DefaultTheme as NavigationDefaultTheme,
 } from '@react-navigation/native';
 import {
+  MD2Colors,
   MD2DarkTheme as PaperDarkTheme,
   MD2LightTheme as PaperDefaultTheme,
 } from 'react-native-paper';
@@ -23,6 +24,7 @@ const themes = {
     ...CombinedDarkTheme,
     colors: {
       ...CombinedDarkTheme.colors,
+      accent: '#378FE6',
       background: '#121212',
     },
   },

@@ -10,9 +10,7 @@ function ChannelItem({ channel }) {
     <Card
       style={styles.card}
       mode="elevated"
-      onPress={() => {
-        console.log(666);
-      }}
+      onPress={() => console.log('Pressed')}
     >
       <Card.Content>
         <View style={styles.titleWrapper}>
