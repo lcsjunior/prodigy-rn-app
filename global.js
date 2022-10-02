@@ -1,0 +1,1 @@
+global.maxDegreeOfParallelism = 2;

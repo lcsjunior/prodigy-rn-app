@@ -19,10 +19,19 @@ expo start
 F5
 ```
 
-Connect to Reactotron:
+## DevTools for React Native:
+
+1\. react-devtools: <br>
+<https://www.npmjs.com/package/react-devtools>
 
 ```bash
-adb reverse tcp:9090 tcp:9090
+react-devtools
 ```
 
-See: <https://github.com/infinitered/reactotron/blob/master/docs/quick-start-react-native.md>
+2\. Reactotron:<br>
+<https://github.com/infinitered/reactotron/releases><br>
+<https://github.com/infinitered/reactotron/blob/master/docs/quick-start-react-native.md>
+
+3\. React Native Debugger:<br>
+<https://github.com/jhen0409/react-native-debugger/releases><br>
+<https://github.com/jhen0409/react-native-debugger/blob/master/docs/getting-started.md>

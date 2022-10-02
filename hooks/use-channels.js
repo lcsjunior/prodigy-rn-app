@@ -2,36 +2,43 @@ import { baseApi } from '@libs/base-api';
 import { thingSpeakApi } from '@libs/thingSpeak-api';
 import useSWR from 'swr';
 import pLimit from 'p-limit';
+import { messages } from '@utils/messages';
 
-const limit = pLimit(2);
+const limit = pLimit(global.maxDegreeOfParallelism);
 
 const channelsFetcher = async (url) => {
-  const { data: channels } = await baseApi.get(url);
-  const promises = channels.map(({ channelId, readAPIKey }) => {
-    const promise = thingSpeakApi.get(`/channels/${channelId}/feeds.json`, {
-      params: {
-        api_key: readAPIKey,
-        results: 0,
-      },
-    });
-    return limit(() => promise);
-  });
   let ret = [];
+  const { data: channels } = await baseApi.get(url);
   try {
-    const result = await Promise.all(promises);
+    const promises = channels.map(({ channelId, readAPIKey }) => {
+      const promise = thingSpeakApi.get(`/channels/${channelId}/feeds.json`, {
+        params: {
+          api_key: readAPIKey,
+          results: 0,
+        },
+      });
+      return limit(() => promise);
+    });
+    const results = await Promise.allSettled(promises);
+    const reduced = results.reduce((acc, result) => {
+      if (result.status === 'fulfilled') {
+        return acc.concat(result.value?.data.channel);
+      }
+      return acc;
+    }, []);
     ret = channels.map((channel) => {
-      const resp = result.find(
-        ({ data }) => data.channel.id === channel.channelId
-      );
-      if (resp) {
+      const chData = reduced.find((item) => item.id === channel.channelId);
+      if (chData) {
         return {
           ...channel,
-          data: resp.data,
+          chData,
         };
       }
       return channel;
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log(`${messages.fetchOperationFailed}: ${err.message}`);
+  }
   return ret;
 };
 

@@ -3,6 +3,7 @@ const messages = {
   failedToFetch: 'Fetch operation failed',
   isRequired: 'This field is required',
   invalidUserOrPass: 'Invalid username or password',
+  channelNotFound: 'Channel not found',
 };
 
 export { messages };
