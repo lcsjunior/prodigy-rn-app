@@ -8,7 +8,8 @@ const limit = pLimit(global.maxDegreeOfParallelism);
 
 const channelsFetcher = async (url) => {
   let ret = [];
-  const { data: channels } = await baseApi.get(url);
+  const { data } = await baseApi.get(url);
+  const channels = Array.isArray(data) ? data : [data];
   try {
     const promises = channels.map(({ channelId, readAPIKey }) => {
       const promise = thingSpeakApi.get(`/channels/${channelId}/feeds.json`, {
@@ -38,12 +39,20 @@ const channelsFetcher = async (url) => {
     });
   } catch (err) {
     console.log(`${messages.fetchOperationFailed}: ${err.message}`);
+    throw err;
   }
   return ret;
 };
 
-const useChannels = () => {
-  const { data, error } = useSWR('/channels', channelsFetcher);
+const initialOptions = {
+  shouldFetch: true,
+  params: {},
+};
+
+const useChannels = (options = initialOptions) => {
+  const { shouldFetch, params } = options;
+  const url = shouldFetch ? `/channels/${params?.id || ''}` : null;
+  const { data, error } = useSWR(url, channelsFetcher);
 
   return {
     channels: data,

@@ -7,7 +7,9 @@ function NotFoundScreen({ route }) {
     <ScreenWrapper contentContainerStyle={styles.container}>
       <Paragraph style={styles.paragraph}>Screen not found</Paragraph>
       {__DEV__ && (
-        <Paragraph style={styles.paragraph}>{JSON.stringify(route)}</Paragraph>
+        <Paragraph style={styles.paragraph}>
+          {JSON.stringify(route, null, 2)}
+        </Paragraph>
       )}
     </ScreenWrapper>
   );

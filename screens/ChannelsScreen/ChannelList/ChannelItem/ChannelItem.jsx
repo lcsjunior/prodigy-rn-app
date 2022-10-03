@@ -1,16 +1,18 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useLinkTo } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import { Card, MD2Colors, Text, useTheme } from 'react-native-paper';
 
 function ChannelItem({ channel }) {
-  const { channelId, chData } = channel;
+  const { id, channelId, chData } = channel;
   const { colors } = useTheme();
+  const linkTo = useLinkTo();
 
   return (
     <Card
       style={styles.card}
       mode="elevated"
-      onPress={() => console.log('Pressed')}
+      onPress={() => linkTo(`/channels/${id}`)}
     >
       <Card.Content>
         <View style={styles.titleWrapper}>

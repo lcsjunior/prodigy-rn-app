@@ -5,6 +5,7 @@ import { NotFoundScreen } from '@screens/NotFoundScreen';
 import { useAuth } from '@hooks/use-auth';
 import { CustomNavigationBar } from '@navigation/CustomNavigationBar';
 import { SettingsScreen } from '@screens/SettingsScreen';
+import { ChannelDetailScreen } from '@screens/ChannelDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,14 +19,19 @@ function RootNavigator() {
       }}
     >
       {isSignedIn ? (
-        <>
+        <Stack.Group>
           <Stack.Screen name="Home" component={HomeTabs} />
           <Stack.Screen
             name="Settings"
             component={SettingsScreen}
             options={{ title: 'Settings' }}
           />
-        </>
+          <Stack.Screen
+            name="ChannelDetail"
+            component={ChannelDetailScreen}
+            options={{ title: 'Channel' }}
+          />
+        </Stack.Group>
       ) : (
         <Stack.Screen
           name="SignIn"

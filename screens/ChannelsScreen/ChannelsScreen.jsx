@@ -1,12 +1,14 @@
 import { ScreenActivityIndicator } from '@components/ScreenActivityIndicator';
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { useChannels } from '@hooks/use-channels';
+import { useLinkTo } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import { FAB, Portal } from 'react-native-paper';
 import { ChannelList } from './ChannelList';
 
 function ChannelsScreen() {
   const { channels, isLoading } = useChannels();
+  const linkTo = useLinkTo();
 
   if (isLoading) {
     return <ScreenActivityIndicator />;
@@ -19,7 +21,7 @@ function ChannelsScreen() {
         <FAB
           icon="plus"
           style={styles.fab}
-          onPress={() => console.log('Pressed')}
+          onPress={() => linkTo('/channels/-1')}
         />
       </Portal.Host>
     </ScreenWrapper>
