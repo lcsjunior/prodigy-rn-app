@@ -1,16 +1,14 @@
 import { baseApi } from '@libs/base-api';
 import { thingSpeakApi } from '@libs/thingSpeak-api';
 import useSWR from 'swr';
-import pLimit from 'p-limit';
 import { messages } from '@utils/messages';
-
-const limit = pLimit(global.maxDegreeOfParallelism);
+import { wrap } from '@utils/array-helpers';
 
 const channelsFetcher = async (url) => {
   let ret = [];
-  const { data } = await baseApi.get(url);
-  const channels = Array.isArray(data) ? data : [data];
   try {
+    const { data } = await baseApi.get(url);
+    const channels = wrap(data);
     const promises = channels.map(({ channelId, readAPIKey }) => {
       const promise = thingSpeakApi.get(`/channels/${channelId}/feeds.json`, {
         params: {
@@ -18,7 +16,7 @@ const channelsFetcher = async (url) => {
           results: 0,
         },
       });
-      return limit(() => promise);
+      return promise;
     });
     const results = await Promise.allSettled(promises);
     const reduced = results.reduce((acc, result) => {

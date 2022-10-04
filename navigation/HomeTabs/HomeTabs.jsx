@@ -12,7 +12,7 @@ function HomeTabs() {
         name="HomeTab"
         component={PanelsScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'My Panels',
           tabBarIcon: ({ color }) => (
             <HomeIcon width="24" height="24" color={color} />
           ),

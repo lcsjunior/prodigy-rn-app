@@ -3,7 +3,7 @@ import { ScreenWrapper } from '@components/ScreenWrapper';
 import { useChannels } from '@hooks/use-channels';
 import { useLinkTo } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
-import { FAB, Portal } from 'react-native-paper';
+import { FAB } from 'react-native-paper';
 import { ChannelList } from './ChannelList';
 
 function ChannelsScreen() {
@@ -17,13 +17,12 @@ function ChannelsScreen() {
   return (
     <ScreenWrapper withScrollView={false}>
       <ChannelList channels={channels} />
-      <Portal.Host>
-        <FAB
-          icon="plus"
-          style={styles.fab}
-          onPress={() => linkTo('/channels/-1')}
-        />
-      </Portal.Host>
+
+      <FAB
+        icon="plus"
+        style={styles.fab}
+        onPress={() => linkTo('/channels/-1')}
+      />
     </ScreenWrapper>
   );
 }

@@ -1,16 +1,30 @@
-import { ListEmptyComponent } from '@components/ListEmptyComponent';
-import { FlatList, StyleSheet } from 'react-native';
+import { SectionList, StyleSheet, View } from 'react-native';
+import { Paragraph, Text } from 'react-native-paper';
 import { ChannelItem } from './ChannelItem';
 
 function ChannelList({ channels }) {
+  const data =
+    channels.length > 0
+      ? [
+          {
+            title: 'ThingSpeak™',
+            data: channels,
+          },
+        ]
+      : [];
   return (
-    <FlatList
+    <SectionList
       contentContainerStyle={styles.container}
-      data={channels}
+      sections={data}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item: channel }) => <ChannelItem channel={channel} />}
+      renderSectionHeader={({ section: { title } }) => (
+        <Text style={styles.sectionHeaderText}>{title}</Text>
+      )}
       ListEmptyComponent={() => (
-        <ListEmptyComponent emptyText="You don't have any channel yet" />
+        <View style={styles.emptyListWrapper}>
+          <Paragraph>You don&#39;t have any channel yet</Paragraph>
+        </View>
       )}
     />
   );
@@ -18,8 +32,16 @@ function ChannelList({ channels }) {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
     padding: 4,
+    flexGrow: 1,
+  },
+  sectionHeaderText: {
+    margin: 4,
+  },
+  emptyListWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
