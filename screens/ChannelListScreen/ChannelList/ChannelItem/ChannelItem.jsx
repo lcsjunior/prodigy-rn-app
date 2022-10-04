@@ -2,6 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useLinkTo } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import { Card, MD2Colors, Text, useTheme } from 'react-native-paper';
+import _ from 'lodash';
 
 function ChannelItem({ channel }) {
   const { id, channelId, chData } = channel;
@@ -16,7 +17,7 @@ function ChannelItem({ channel }) {
     >
       <Card.Content>
         <View style={styles.titleWrapper}>
-          {!chData && (
+          {_.isEmpty(chData) && (
             <Ionicons
               name="warning-outline"
               size={20}

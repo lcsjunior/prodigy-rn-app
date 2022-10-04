@@ -2,7 +2,7 @@ import { ScreenWrapper } from '@components/ScreenWrapper';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 
-function PanelsScreen() {
+function PanelListScreen() {
   return (
     <ScreenWrapper contentContainerStyle={styles.container}>
       <Text style={styles.paragraph}>Panels</Text>
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { PanelsScreen };
+export { PanelListScreen };

@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { FAB } from 'react-native-paper';
 import { ChannelList } from './ChannelList';
 
-function ChannelsScreen() {
+function ChannelListScreen() {
   const { channels, isLoading } = useChannels();
   const linkTo = useLinkTo();
 
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { ChannelsScreen };
+export { ChannelListScreen };

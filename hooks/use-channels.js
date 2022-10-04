@@ -27,13 +27,10 @@ const channelsFetcher = async (url) => {
     }, []);
     ret = channels.map((channel) => {
       const chData = reduced.find((item) => item.id === channel.channelId);
-      if (chData) {
-        return {
-          ...channel,
-          chData,
-        };
-      }
-      return channel;
+      return {
+        ...channel,
+        chData: chData || {},
+      };
     });
   } catch (err) {
     console.log(`${messages.fetchOperationFailed}: ${err.message}`);

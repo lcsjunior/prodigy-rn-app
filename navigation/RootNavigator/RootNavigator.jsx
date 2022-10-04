@@ -5,7 +5,7 @@ import { NotFoundScreen } from '@screens/NotFoundScreen';
 import { useAuth } from '@hooks/use-auth';
 import { CustomNavigationBar } from '@navigation/CustomNavigationBar';
 import { SettingsScreen } from '@screens/SettingsScreen';
-import { ChannelDetailScreen } from '@screens/ChannelDetailScreen';
+import { ChannelScreen } from '@screens/ChannelScreen';
 
 const Stack = createStackNavigator();
 
@@ -14,8 +14,10 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator
+      detachInactiveScreens={true}
       screenOptions={{
         header: (props) => <CustomNavigationBar {...props} />,
+        detachPreviousScreen: true,
       }}
     >
       {isSignedIn ? (
@@ -28,7 +30,7 @@ function RootNavigator() {
           />
           <Stack.Screen
             name="ChannelDetail"
-            component={ChannelDetailScreen}
+            component={ChannelScreen}
             options={{ title: 'Channel' }}
           />
         </Stack.Group>

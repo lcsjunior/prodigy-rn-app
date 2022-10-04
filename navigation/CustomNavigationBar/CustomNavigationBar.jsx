@@ -12,7 +12,7 @@ function CustomNavigationBar({ navigation, back, options, route }) {
   if (route.name === 'Home') {
     return (
       <Appbar.Header>
-        <Appbar.Content title="Prodigy IoT" titleStyle={styles.titleText} />
+        <Appbar.Content title="Prodigy IoT" titleStyle={styles.logo} />
         <Menu
           visible={isMenuOpen}
           onDismiss={onMenuToggle}
@@ -39,17 +39,20 @@ function CustomNavigationBar({ navigation, back, options, route }) {
   return (
     <Appbar.Header>
       {back && <Appbar.BackAction onPress={navigation.goBack} />}
-      <Appbar.Content title={options.title} />
+      <Appbar.Content title={options.title} titleStyle={styles.title} />
     </Appbar.Header>
   );
 }
 
 const styles = StyleSheet.create({
-  titleText: {
+  logo: {
     fontFamily: 'Astro-Space',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 1,
     textShadowColor: '#171717',
+  },
+  title: {
+    fontSize: 17,
   },
 });
 

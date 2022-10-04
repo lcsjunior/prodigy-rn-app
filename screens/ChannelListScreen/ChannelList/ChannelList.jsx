@@ -19,7 +19,7 @@ function ChannelList({ channels }) {
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item: channel }) => <ChannelItem channel={channel} />}
       renderSectionHeader={({ section: { title } }) => (
-        <Text style={styles.sectionHeaderText}>{title}</Text>
+        <Text style={styles.sectionHeader}>{title}</Text>
       )}
       ListEmptyComponent={() => (
         <View style={styles.emptyListWrapper}>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     padding: 4,
     flexGrow: 1,
   },
-  sectionHeaderText: {
+  sectionHeader: {
     margin: 4,
   },
   emptyListWrapper: {

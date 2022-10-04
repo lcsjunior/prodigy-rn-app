@@ -1,6 +1,7 @@
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { TextInputAvoidingView } from '@components/TextInputAvoidingView/TextInputAvoidingView';
 import { useAuth } from '@hooks/use-auth';
+import { useReducerForm } from '@hooks/use-reducer-form';
 import { useFocusEffect } from '@react-navigation/native';
 import { messages } from '@utils/messages';
 import { isBlank } from '@utils/string-helpers';
@@ -20,8 +21,11 @@ function SignInScreen() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
   const { onLogin } = useAuth();
-  const [username, setUsername] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
+  const { values, errors, setFormErrors, handleInputChange, handleInputFocus } =
+    useReducerForm({
+      username: '',
+      password: '',
+    });
 
   useFocusEffect(
     useCallback(() => {
@@ -36,18 +40,18 @@ function SignInScreen() {
     Keyboard.dismiss();
     toast.hideAll();
     let fails = false;
-    if (isBlank(username.value)) {
-      setUsername((state) => ({ ...state, error: messages.isRequired }));
+    if (isBlank(values.username)) {
+      setFormErrors({ username: messages.isRequired });
       fails = true;
     }
-    if (isBlank(password.value)) {
-      setPassword((state) => ({ ...state, error: messages.isRequired }));
+    if (isBlank(values.password)) {
+      setFormErrors({ password: messages.isRequired });
       fails = true;
     }
     if (!fails) {
       setIsSubmitting(true);
       try {
-        await onLogin(username.value, password.value);
+        await onLogin(values.username, values.password);
       } catch (err) {
         toast.show(messages.invalidUserOrPass, {
           type: 'danger',
@@ -60,37 +64,35 @@ function SignInScreen() {
   return (
     <TextInputAvoidingView>
       <ScreenWrapper withScrollView={false} style={styles.container}>
-        <Text style={styles.titleText}>Prodigy IoT</Text>
+        <Text style={styles.logo}>Prodigy IoT</Text>
         <View>
           <TextInput
             label="Username or email address"
             mode="flat"
-            returnKeyType="next"
             autoCapitalize="none"
-            value={username.value}
-            onChangeText={(text) => setUsername({ value: text, error: '' })}
-            onFocus={() => setUsername((state) => ({ ...state, error: '' }))}
-            error={!!username.error}
+            value={values.username}
+            onChangeText={handleInputChange('username')}
+            onFocus={handleInputFocus('username')}
+            error={!!errors.username}
           />
-          <HelperText type="error" visible={!!username.error}>
-            {username.error}
+          <HelperText type="error" visible={!!errors.username}>
+            {errors.username}
           </HelperText>
         </View>
         <View>
           <TextInput
             label="Password"
             mode="flat"
-            returnKeyType="done"
             autoCapitalize="none"
             secureTextEntry
-            value={password.value}
-            onChangeText={(text) => setPassword({ value: text, error: '' })}
-            onFocus={() => setPassword((state) => ({ ...state, error: '' }))}
-            error={!!password.error}
+            value={values.password}
+            onChangeText={handleInputChange('password')}
+            onFocus={handleInputFocus('password')}
+            error={!!errors.password}
           />
-          {!!password.error && (
-            <HelperText type="error" visible={!!password.error}>
-              {password.error}
+          {!!errors.password && (
+            <HelperText type="error" visible={!!errors.password}>
+              {errors.password}
             </HelperText>
           )}
         </View>
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
   baseText: {
     fontSize: 13,
   },
-  titleText: {
+  logo: {
     fontFamily: 'Astro-Space',
     fontSize: 32,
     textAlign: 'center',

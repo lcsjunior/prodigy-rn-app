@@ -1,7 +1,7 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { CloudSetIcon, HomeIcon } from '@components/Icons';
-import { PanelsScreen } from '@screens/PanelsScreen';
-import { ChannelsScreen } from '@screens/ChannelsScreen';
+import { PanelListScreen } from '@screens/PanelListScreen';
+import { ChannelListScreen } from '@screens/ChannelListScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -10,7 +10,7 @@ function HomeTabs() {
     <Tab.Navigator shifting>
       <Tab.Screen
         name="HomeTab"
-        component={PanelsScreen}
+        component={PanelListScreen}
         options={{
           tabBarLabel: 'My Panels',
           tabBarIcon: ({ color }) => (
@@ -20,7 +20,7 @@ function HomeTabs() {
       />
       <Tab.Screen
         name="ChannelsTab"
-        component={ChannelsScreen}
+        component={ChannelListScreen}
         options={{
           tabBarLabel: 'My Channels',
           tabBarIcon: ({ color }) => (
