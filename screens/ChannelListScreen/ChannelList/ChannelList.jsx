@@ -1,5 +1,5 @@
 import { SectionList, StyleSheet, View } from 'react-native';
-import { Paragraph, Text } from 'react-native-paper';
+import { Paragraph } from 'react-native-paper';
 import { ChannelItem } from './ChannelItem';
 
 function ChannelList({ channels }) {
@@ -18,9 +18,6 @@ function ChannelList({ channels }) {
       sections={data}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item: channel }) => <ChannelItem channel={channel} />}
-      renderSectionHeader={({ section: { title } }) => (
-        <Text style={styles.sectionHeader}>{title}</Text>
-      )}
       ListEmptyComponent={() => (
         <View style={styles.emptyListWrapper}>
           <Paragraph>You don&#39;t have any channel yet</Paragraph>
@@ -34,9 +31,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 4,
     flexGrow: 1,
-  },
-  sectionHeader: {
-    margin: 4,
   },
   emptyListWrapper: {
     flex: 1,
