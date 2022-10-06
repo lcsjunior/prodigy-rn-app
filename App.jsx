@@ -15,6 +15,7 @@ import * as Font from 'expo-font';
 import { customFonts } from '@core/custom-fonts';
 import { ToastProvider } from 'react-native-toast-notifications';
 import { GlobalProvider } from '@contexts/GlobalContext';
+import { fetcher } from '@libs/base-api';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -65,6 +66,7 @@ export default function App() {
     <SWRConfig
       value={{
         provider: () => new Map(),
+        fetcher,
       }}
     >
       <AuthProvider>

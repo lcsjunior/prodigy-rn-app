@@ -31,7 +31,8 @@ function SettingsScreen() {
 
   return (
     <ScreenWrapper contentContainerStyle={styles.container}>
-      <List.Section title="My Account">
+      <List.Section>
+        <List.Subheader>My Account</List.Subheader>
         <List.Item
           left={() => (
             <Avatar.Text

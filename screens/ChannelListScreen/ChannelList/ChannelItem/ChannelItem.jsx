@@ -25,7 +25,10 @@ function ChannelItem({ channel }) {
               style={styles.warnIcon}
             />
           )}
-          <Text numberOfLines={1} style={styles.title}>
+          <Text
+            numberOfLines={1}
+            style={[styles.title, _.isEmpty(chData) && styles.italicText]}
+          >
             {chData?.name || 'Channel not found'}
           </Text>
         </View>
@@ -48,6 +51,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '800',
     marginVertical: 2,
+  },
+  italicText: {
+    fontStyle: 'italic',
   },
   description: {
     fontSize: 13,

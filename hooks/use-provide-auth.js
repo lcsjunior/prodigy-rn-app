@@ -1,4 +1,4 @@
-import { baseApi, fetcher } from '@libs/base-api';
+import { baseApi } from '@libs/base-api';
 import { messages } from '@utils/messages';
 import { useEffect, useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
@@ -6,7 +6,7 @@ import useSWR, { useSWRConfig } from 'swr';
 const useProvideAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const { data: user, mutate: mutateUser, error } = useSWR('/user', fetcher);
+  const { data: user, mutate: mutateUser, error } = useSWR('/user');
   const { cache } = useSWRConfig();
 
   useEffect(() => {
