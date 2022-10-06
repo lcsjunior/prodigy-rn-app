@@ -1,6 +1,7 @@
 import { DockedFormFooter } from '@components/DockedFormFooter';
 import { ScreenActivityIndicator } from '@components/ScreenActivityIndicator';
 import { ScreenWrapper } from '@components/ScreenWrapper';
+import { TextInputAvoidingView } from '@components/TextInputAvoidingView';
 import { useChannels } from '@hooks/use-channels';
 import { useDisclose } from '@hooks/use-disclosure';
 import { useGlobal } from '@hooks/use-global';
@@ -73,7 +74,7 @@ function ChannelScreen({ navigation, route }) {
   };
 
   return (
-    <>
+    <TextInputAvoidingView>
       <ScreenWrapper contentContainerStyle={styles.container}>
         <View>
           <TextInput
@@ -154,7 +155,7 @@ function ChannelScreen({ navigation, route }) {
         onSavePress={handleSavePress}
         onDeletePress={handleDeletePress}
       />
-    </>
+    </TextInputAvoidingView>
   );
 }
 
