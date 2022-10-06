@@ -10,8 +10,8 @@ function ConfirmationDialog(props, ref) {
   const { defer, deferRef } = useDeferredPromise(null);
 
   const handleConfirm = () => {
-    deferRef.resolve(true);
     onClose();
+    deferRef.resolve(true);
   };
 
   const handleCancel = () => {

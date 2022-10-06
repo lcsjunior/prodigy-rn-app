@@ -1,5 +1,5 @@
 import { ScreenWrapper } from '@components/ScreenWrapper';
-import { TextInputAvoidingView } from '@components/TextInputAvoidingView/TextInputAvoidingView';
+import { TextInputAvoidingView } from '@components/TextInputAvoidingView';
 import { useAuth } from '@hooks/use-auth';
 import { useReducerForm } from '@hooks/use-reducer-form';
 import { useFocusEffect } from '@react-navigation/native';

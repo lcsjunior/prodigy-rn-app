@@ -1,6 +1,7 @@
 import { coalesce } from './array-helpers';
 
-const isBlank = (str) => str.trim().length === 0;
+const isBlank = (str) =>
+  str === null || str === undefined || str.trim().length === 0;
 
 const getInitials = (name, { maxInitials }) => {
   return name

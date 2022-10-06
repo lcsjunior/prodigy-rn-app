@@ -3,18 +3,22 @@ import { ScreenActivityIndicator } from '@components/ScreenActivityIndicator';
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { useChannels } from '@hooks/use-channels';
 import { useDisclose } from '@hooks/use-disclosure';
+import { useGlobal } from '@hooks/use-global';
 import { useReducerForm } from '@hooks/use-reducer-form';
+import { messages } from '@utils/messages';
+import { isBlank } from '@utils/string-helpers';
 import { useLayoutEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { HelperText, Paragraph, TextInput } from 'react-native-paper';
 
 function ChannelScreen({ navigation, route }) {
   const { params } = route;
-  const isNew = params?.id === -1;
-  const { isLoading, channel } = useChannels(params?.id);
+  const { channel, isLoading, createChannel, updateChannel, deleteChannel } =
+    useChannels(params?.id);
+  const isNew = !channel;
   const title = isNew
     ? 'Add ThingSpeak™ Channel'
-    : channel.displayName || channel.chData?.name;
+    : channel?.displayName || channel.chData?.name;
   const { values, errors, setFormErrors, handleInputChange, handleInputFocus } =
     useReducerForm({
       channelId: channel?.channelId,
@@ -22,6 +26,7 @@ function ChannelScreen({ navigation, route }) {
       writeAPIKey: channel?.writeAPIKey,
       displayName: channel?.displayName,
     });
+  const { progressDialog } = useGlobal();
   const { isOpen: isRKeyHidden, onToggle: onRKeyHiddenToggle } =
     useDisclose(true);
   const { isOpen: isWKeyHidden, onToggle: onWKeyHiddenToggle } =
@@ -37,6 +42,36 @@ function ChannelScreen({ navigation, route }) {
     return <ScreenActivityIndicator />;
   }
 
+  const handleChannelEditing = async () => {};
+
+  const handleSavePress = async () => {
+    if (isBlank(values.channelId)) {
+      setFormErrors({ channelId: messages.isRequired });
+    } else {
+      progressDialog.show();
+      try {
+        if (isNew) {
+          await createChannel(values);
+        } else {
+          await updateChannel(values);
+        }
+        navigation.goBack();
+      } catch (err) {
+        console.log(err);
+      }
+      progressDialog.hide();
+    }
+  };
+
+  const handleDeletePress = async () => {
+    progressDialog.show();
+    try {
+      await deleteChannel();
+      navigation.goBack();
+    } catch (err) {}
+    progressDialog.hide();
+  };
+
   return (
     <>
       <ScreenWrapper contentContainerStyle={styles.container}>
@@ -50,7 +85,7 @@ function ChannelScreen({ navigation, route }) {
             onChangeText={handleInputChange('channelId')}
             onFocus={handleInputFocus('channelId')}
             error={!!errors.channelId}
-            onEndEditing={() => console.log(666)}
+            onEndEditing={handleChannelEditing}
             editable={isNew}
           />
           {channel?.chData && channel.chData?.name ? (
@@ -116,8 +151,8 @@ function ChannelScreen({ navigation, route }) {
       </ScreenWrapper>
       <DockedFormFooter
         isDeleteVisible={!isNew}
-        onSavePress={() => {}}
-        onDeletePress={() => {}}
+        onSavePress={handleSavePress}
+        onDeletePress={handleDeletePress}
       />
     </>
   );
