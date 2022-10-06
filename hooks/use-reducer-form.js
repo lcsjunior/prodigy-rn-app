@@ -5,6 +5,13 @@ const initialState = {
   errors: {},
 };
 
+const prepareValues = (values) => {
+  for (const key in values) {
+    values[key] = values[key]?.toString();
+  }
+  return values;
+};
+
 const formReducer = (state, action) => {
   switch (action.type) {
     case 'form/updateValues':
@@ -35,7 +42,7 @@ const formReducer = (state, action) => {
 const useReducerForm = (initialValues) => {
   const [state, dispatch] = useReducer(formReducer, {
     ...initialState,
-    values: initialValues,
+    values: prepareValues(initialValues),
   });
 
   const setFormValues = (values) => {

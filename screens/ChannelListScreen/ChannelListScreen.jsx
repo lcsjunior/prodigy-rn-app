@@ -17,7 +17,6 @@ function ChannelListScreen() {
   return (
     <ScreenWrapper withScrollView={false}>
       <ChannelList channels={channels} />
-
       <FAB
         icon="plus"
         style={styles.fab}

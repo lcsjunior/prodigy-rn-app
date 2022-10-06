@@ -3,9 +3,10 @@ import { useLinkTo } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import { Card, MD2Colors, Text, useTheme } from 'react-native-paper';
 import _ from 'lodash';
+import { messages } from '@utils/messages';
 
 function ChannelItem({ channel }) {
-  const { id, channelId, chData } = channel;
+  const { id, channelId, displayName, chData } = channel;
   const { colors } = useTheme();
   const linkTo = useLinkTo();
 
@@ -29,7 +30,7 @@ function ChannelItem({ channel }) {
             numberOfLines={1}
             style={[styles.title, _.isEmpty(chData) && styles.italicText]}
           >
-            {chData?.name || 'Channel not found'}
+            {displayName || chData?.name || messages.channelNotFound}
           </Text>
         </View>
         <Text style={styles.description}>Channel ID: {channelId}</Text>

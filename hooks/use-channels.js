@@ -1,14 +1,13 @@
 import useSWR from 'swr';
 
-const useChannels = () => {
+const useChannels = (id) => {
   const { data: channels, error } = useSWR('/channels');
-
-  const getChannel = (id) => channels.find((channel) => channel.id === id);
+  const channel = id ? channels.find((item) => item.id === id) : null;
 
   return {
     channels,
+    channel,
     isLoading: !error && !channels,
-    getChannel,
   };
 };
 
