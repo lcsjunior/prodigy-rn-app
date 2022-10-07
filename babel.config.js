@@ -8,6 +8,7 @@ module.exports = (api) => {
       },
     },
     plugins: [
+      'react-native-reanimated/plugin',
       [
         'module-resolver',
         {

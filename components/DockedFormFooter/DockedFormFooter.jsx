@@ -1,7 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { Button, MD2Colors, useTheme } from 'react-native-paper';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useKeyboard } from '@hooks/use-keyboard';
 import { useGlobal } from '@hooks/use-global';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,13 +11,8 @@ function DockedFormFooter({
   onDeletePress,
 }) {
   const { colors } = useTheme();
-  const { isKeyboardVisible } = useKeyboard();
   const navigation = useNavigation();
   const { confirm } = useGlobal();
-
-  if (isKeyboardVisible) {
-    return null;
-  }
 
   const handleSavePress = () => {
     onSavePress();
@@ -96,13 +90,8 @@ function DockedFormFooter({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    marginVertical: 10,
-    marginHorizontal: 4,
-    right: 0,
-    bottom: 0,
+    paddingTop: 8,
   },
   button: {
     flex: 1,

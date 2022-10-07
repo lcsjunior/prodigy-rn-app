@@ -4,6 +4,7 @@ const messages = {
   isRequired: 'This field is required',
   invalidUserOrPass: 'Invalid username or password',
   channelNotFound: 'Channel not found',
+  invalidAPIKey: 'Invalid API Key',
 };
 
 export { messages };

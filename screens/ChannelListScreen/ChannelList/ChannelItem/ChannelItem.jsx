@@ -28,7 +28,7 @@ function ChannelItem({ channel }) {
           )}
           <Text
             numberOfLines={1}
-            style={[styles.title, _.isEmpty(chData) && styles.italicText]}
+            style={[styles.title, _.isEmpty(chData) && styles.notFound]}
           >
             {displayName || chData?.name || messages.channelNotFound}
           </Text>
@@ -52,14 +52,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '800',
     marginVertical: 2,
+    color: '#60a5fa',
   },
-  italicText: {
+  notFound: {
     fontStyle: 'italic',
+    color: '#fff',
   },
   description: {
     fontSize: 13,
     marginVertical: 2,
-    color: MD2Colors.grey400,
+    color: MD2Colors.grey300,
   },
   warnIcon: {
     marginRight: 6,

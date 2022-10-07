@@ -8,23 +8,27 @@ import {
 } from 'react-native-paper';
 import merge from 'deepmerge';
 
-const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
-const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
+const CombinedDefaultTheme = merge(NavigationDefaultTheme, PaperDefaultTheme);
+const CombinedDarkTheme = merge(NavigationDarkTheme, PaperDarkTheme);
 
 const themes = {
   light: {
     ...CombinedDefaultTheme,
     colors: {
       ...CombinedDefaultTheme.colors,
-      primary: '#FFFFFF',
     },
   },
   dark: {
     ...CombinedDarkTheme,
     colors: {
       ...CombinedDarkTheme.colors,
-      accent: CombinedDarkTheme.colors.primary,
-      background: '#121212',
+      primary: '#60a5fa',
+      accent: '#60a5fa',
+      background: '#111111',
+      surface: '#121212',
+      card: '#121212',
+      error: '#CF6679',
+      text: '#ffff',
     },
   },
 };

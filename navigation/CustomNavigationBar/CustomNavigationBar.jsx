@@ -48,8 +48,9 @@ const styles = StyleSheet.create({
   logo: {
     fontFamily: 'Astro-Space',
     textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 1,
-    textShadowColor: '#171717',
+    textShadowRadius: 3,
+    textShadowColor: '#000',
+    fontSize: 24,
   },
   title: {
     fontSize: 17,

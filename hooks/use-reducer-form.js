@@ -22,7 +22,7 @@ const formReducer = (state, action) => {
     case 'form/updateErrors':
       return {
         ...state,
-        errors: { ...state.errors, ...action.errors },
+        errors: action.errors,
       };
     case 'form/setValue':
       return {

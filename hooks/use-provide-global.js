@@ -1,4 +1,9 @@
-function useProvideGlobal({ confirmationDialogRef, progressDialogRef }) {
+function useProvideGlobal({
+  alertDialogRef,
+  confirmationDialogRef,
+  progressDialogRef,
+}) {
+  const alert = (config) => alertDialogRef.current.alert(config);
   const confirm = (config) => confirmationDialogRef.current.confirm(config);
 
   const progressDialog = {
@@ -7,6 +12,7 @@ function useProvideGlobal({ confirmationDialogRef, progressDialogRef }) {
   };
 
   return {
+    alert,
     confirm,
     progressDialog,
   };

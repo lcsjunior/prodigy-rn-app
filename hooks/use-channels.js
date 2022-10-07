@@ -1,6 +1,7 @@
 import { baseApi } from '@libs/base-api';
 import useSWR from 'swr';
 import _ from 'lodash';
+import { thingSpeakApi } from '@libs/thingspeak-api';
 
 const useChannels = (id) => {
   const { data: channels, mutate: mutateChannels, error } = useSWR('/channels');
@@ -10,8 +11,7 @@ const useChannels = (id) => {
     return mutateChannels(
       async () => {
         const { data: newChannel } = await baseApi.post('/channels', values);
-        const { data } = await baseApi.get(`/channels/${newChannel.id}`);
-        return [...channels, data];
+        return [...channels, newChannel];
       },
       { revalidate: false }
     );
@@ -20,10 +20,12 @@ const useChannels = (id) => {
   const updateChannel = (values) => {
     return mutateChannels(
       async () => {
-        await baseApi.patch(`/channels/${id}`, values);
-        const { data } = await baseApi.get(`/channels/${id}`);
+        const { data: updatedChannel } = await baseApi.patch(
+          `/channels/${id}`,
+          values
+        );
         const filtered = channels.filter((item) => item.id !== id);
-        return _.orderBy([...filtered, data], 'id');
+        return _.orderBy([...filtered, updatedChannel], 'id');
       },
       { revalidate: false }
     );
@@ -40,6 +42,15 @@ const useChannels = (id) => {
     );
   };
 
+  const checkChannelAccess = (channelId, readAPIKey) => {
+    return thingSpeakApi.get(`channels/${channelId}/status.json`, {
+      params: {
+        api_key: readAPIKey,
+        results: 0,
+      },
+    });
+  };
+
   return {
     channels,
     channel,
@@ -47,6 +58,7 @@ const useChannels = (id) => {
     createChannel,
     updateChannel,
     deleteChannel,
+    checkChannelAccess,
   };
 };
 

@@ -1,5 +1,5 @@
-import { NavigationContainer } from '@react-navigation/native';
 import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import * as SplashScreen from 'expo-splash-screen';
 import { linking } from './linking';
@@ -12,7 +12,7 @@ import { usePreferences } from '@hooks/use-preferences';
 import { PreferencesProvider } from '@contexts/PreferencesContext';
 import { AuthProvider } from '@contexts/AuthContext';
 import * as Font from 'expo-font';
-import { customFonts } from '@core/custom-fonts';
+import { customFonts } from '@core/fonts';
 import { ToastProvider } from 'react-native-toast-notifications';
 import { GlobalProvider } from '@contexts/GlobalContext';
 import { fetcher } from '@libs/base-api';

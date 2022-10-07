@@ -1,37 +1,48 @@
 import { DockedFormFooter } from '@components/DockedFormFooter';
 import { ScreenActivityIndicator } from '@components/ScreenActivityIndicator';
 import { ScreenWrapper } from '@components/ScreenWrapper';
-import { TextInputAvoidingView } from '@components/TextInputAvoidingView';
 import { useChannels } from '@hooks/use-channels';
-import { useDisclose } from '@hooks/use-disclosure';
 import { useGlobal } from '@hooks/use-global';
 import { useReducerForm } from '@hooks/use-reducer-form';
 import { messages } from '@utils/messages';
 import { isBlank } from '@utils/string-helpers';
-import { useLayoutEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useLayoutEffect, useState } from 'react';
+import { Keyboard, StyleSheet, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { HelperText, Paragraph, TextInput } from 'react-native-paper';
 
 function ChannelScreen({ navigation, route }) {
   const { params } = route;
-  const { channel, isLoading, createChannel, updateChannel, deleteChannel } =
-    useChannels(params?.id);
+  const {
+    channel,
+    isLoading,
+    createChannel,
+    updateChannel,
+    deleteChannel,
+    checkChannelAccess,
+  } = useChannels(params?.id);
   const isNew = !channel;
+  const hasChData = channel?.chData;
   const title = isNew
     ? 'Add ThingSpeak™ Channel'
     : channel?.displayName || channel.chData?.name;
-  const { values, errors, setFormErrors, handleInputChange, handleInputFocus } =
-    useReducerForm({
-      channelId: channel?.channelId,
-      readAPIKey: channel?.readAPIKey,
-      writeAPIKey: channel?.writeAPIKey,
-      displayName: channel?.displayName,
-    });
-  const { progressDialog } = useGlobal();
-  const { isOpen: isRKeyHidden, onToggle: onRKeyHiddenToggle } =
-    useDisclose(true);
-  const { isOpen: isWKeyHidden, onToggle: onWKeyHiddenToggle } =
-    useDisclose(true);
+  const [chDataName, setChDataName] = useState(
+    hasChData ? channel.chData.name : null
+  );
+  const {
+    values,
+    errors,
+    setFormValues,
+    setFormErrors,
+    handleInputChange,
+    handleInputFocus,
+  } = useReducerForm({
+    channelId: channel?.channelId,
+    readAPIKey: channel?.readAPIKey,
+    writeAPIKey: channel?.writeAPIKey,
+    displayName: channel?.displayName,
+  });
+  const { alert, progressDialog } = useGlobal();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -43,22 +54,68 @@ function ChannelScreen({ navigation, route }) {
     return <ScreenActivityIndicator />;
   }
 
-  const handleChannelEditing = async () => {};
-
-  const handleSavePress = async () => {
+  const handleChannelEditing = async () => {
+    Keyboard.dismiss();
+    setFormValues({ displayName: '' });
+    setChDataName('');
     if (isBlank(values.channelId)) {
       setFormErrors({ channelId: messages.isRequired });
     } else {
       progressDialog.show();
       try {
-        if (isNew) {
-          await createChannel(values);
+        const resp = await checkChannelAccess(
+          values.channelId,
+          values.readAPIKey
+        );
+        if (resp.data === '-1') {
+          setFormErrors({
+            readAPIKey: values.readAPIKey
+              ? messages.invalidAPIKey
+              : messages.isRequired,
+          });
+          alert({
+            title: 'Channel access',
+            message: `Channel ${values.channelId} is not public.\nPlease enter a valid Read API Key.`,
+          });
         } else {
-          await updateChannel(values);
+          const { name } = resp.data.channel;
+          setFormValues({ displayName: name });
+          setChDataName(name);
         }
-        navigation.goBack();
       } catch (err) {
-        console.log(err);
+        setFormErrors({ channelId: messages.channelNotFound });
+      }
+      progressDialog.hide();
+    }
+  };
+
+  const handleSavePress = async () => {
+    Keyboard.dismiss();
+    if (isBlank(values.channelId)) {
+      setFormErrors({ channelId: messages.isRequired });
+    } else {
+      progressDialog.show();
+      try {
+        const resp = await checkChannelAccess(
+          values.channelId,
+          values.readAPIKey
+        );
+        if (resp.data === '-1') {
+          setFormErrors({
+            readAPIKey: values.readAPIKey
+              ? messages.invalidAPIKey
+              : messages.isRequired,
+          });
+        } else {
+          if (isNew) {
+            await createChannel(values);
+          } else {
+            await updateChannel(values);
+          }
+          navigation.goBack();
+        }
+      } catch (err) {
+        setFormErrors({ channelId: messages.channelNotFound });
       }
       progressDialog.hide();
     }
@@ -74,8 +131,8 @@ function ChannelScreen({ navigation, route }) {
   };
 
   return (
-    <TextInputAvoidingView>
-      <ScreenWrapper contentContainerStyle={styles.container}>
+    <ScreenWrapper withScrollView={false} style={styles.container}>
+      <ScrollView>
         <View>
           <TextInput
             label="Channel ID"
@@ -89,33 +146,28 @@ function ChannelScreen({ navigation, route }) {
             onEndEditing={handleChannelEditing}
             editable={isNew}
           />
-          {channel?.chData && channel.chData?.name ? (
-            <View style={styles.chDataWrapper}>
-              <Paragraph style={styles.chDataText} numberOfLines={1}>
-                {channel.chData?.name}
-              </Paragraph>
-            </View>
-          ) : (
+          {errors.channelId && (
             <HelperText type="error" visible={!!errors.channelId}>
               {errors.channelId}
             </HelperText>
           )}
+          <View style={styles.chData}>
+            {chDataName && (
+              <Paragraph style={styles.chDataText} numberOfLines={1}>
+                {chDataName}
+              </Paragraph>
+            )}
+          </View>
         </View>
         <View>
           <TextInput
             label="Read API Key"
             mode="flat"
-            secureTextEntry={isRKeyHidden}
+            secureTextEntry
             value={values.readAPIKey}
             onChangeText={handleInputChange('readAPIKey')}
             onFocus={handleInputFocus('readAPIKey')}
             error={!!errors.readAPIKey}
-            right={
-              <TextInput.Icon
-                icon={isRKeyHidden ? 'eye-off' : 'eye'}
-                onPress={onRKeyHiddenToggle}
-              />
-            }
           />
           <HelperText type="error" visible={!!errors.readAPIKey}>
             {errors.readAPIKey}
@@ -125,16 +177,10 @@ function ChannelScreen({ navigation, route }) {
           <TextInput
             label="Write API Key"
             mode="flat"
-            secureTextEntry={isWKeyHidden}
+            secureTextEntry
             value={values.writeAPIKey}
             onChangeText={handleInputChange('writeAPIKey')}
             onFocus={handleInputFocus('writeAPIKey')}
-            right={
-              <TextInput.Icon
-                icon={isWKeyHidden ? 'eye-off' : 'eye'}
-                onPress={onWKeyHiddenToggle}
-              />
-            }
           />
           <HelperText type="error" visible={!!errors.writeAPIKey}>
             {errors.writeAPIKey}
@@ -149,26 +195,28 @@ function ChannelScreen({ navigation, route }) {
             onFocus={handleInputFocus('displayName')}
           />
         </View>
-      </ScreenWrapper>
+      </ScrollView>
       <DockedFormFooter
         isDeleteVisible={!isNew}
         onSavePress={handleSavePress}
         onDeletePress={handleDeletePress}
       />
-    </TextInputAvoidingView>
+    </ScreenWrapper>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 12,
-    marginHorizontal: 8,
+    flex: 1,
+    margin: 8,
   },
-  chDataWrapper: {
-    marginBottom: 12,
+  chData: {
+    marginBottom: 24,
+    marginLeft: 6,
   },
   chDataText: {
     fontSize: 13,
+    color: '#60a5fa',
   },
 });
 
