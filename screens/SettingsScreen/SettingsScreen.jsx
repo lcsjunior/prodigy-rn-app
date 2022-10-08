@@ -1,15 +1,15 @@
+import { Button } from '@components/Button';
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { useAuth } from '@hooks/use-auth';
 import { useGlobal } from '@hooks/use-global';
 import { getUserInitiais } from '@utils/string-helpers';
 import { StyleSheet } from 'react-native';
-import { Avatar, Button, List, useTheme } from 'react-native-paper';
+import { Avatar, List } from 'react-native-paper';
 import sleep from 'sleep-promise';
 
 function SettingsScreen() {
-  const { confirm, progressDialog } = useGlobal();
+  const { confirm, progress } = useGlobal();
   const { onLogout, user } = useAuth();
-  const { colors } = useTheme();
 
   const { username, firstName = '', lastName = '' } = user;
   const fullname = `${firstName || ''} ${lastName || ''}`.trim();
@@ -21,10 +21,10 @@ function SettingsScreen() {
         message: 'Are you sure you want to sign out?',
       });
       if (confirmed) {
-        progressDialog.show();
+        progress.show();
         await sleep(1000);
         await onLogout();
-        progressDialog.hide();
+        progress.hide();
       }
     } catch (err) {}
   };
@@ -35,11 +35,7 @@ function SettingsScreen() {
         <List.Subheader>My Account</List.Subheader>
         <List.Item
           left={() => (
-            <Avatar.Text
-              style={[styles.avatar, { backgroundColor: colors.accent }]}
-              size={80}
-              label={initials}
-            />
+            <Avatar.Text style={styles.avatar} size={80} label={initials} />
           )}
           title={username}
           description={fullname}

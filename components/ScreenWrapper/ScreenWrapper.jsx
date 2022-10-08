@@ -7,7 +7,7 @@ function ScreenWrapper({
   withScrollView = true,
   style = null,
   contentContainerStyle,
-  ...rest
+  ...props
 }) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
@@ -25,7 +25,7 @@ function ScreenWrapper({
   if (withScrollView) {
     return (
       <ScrollView
-        {...rest}
+        {...props}
         contentContainerStyle={contentContainerStyle}
         alwaysBounceVertical={false}
         showsVerticalScrollIndicator={false}

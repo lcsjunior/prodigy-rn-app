@@ -1,11 +1,11 @@
 import { ScreenWrapper } from '@components/ScreenWrapper';
+import { Text } from '@components/Text';
 import { StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
 
 function PanelListScreen() {
   return (
     <ScreenWrapper contentContainerStyle={styles.container}>
-      <Text style={styles.paragraph}>Panels</Text>
+      <Text>Panels</Text>
     </ScreenWrapper>
   );
 }
@@ -13,10 +13,8 @@ function PanelListScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
     justifyContent: 'center',
-  },
-  paragraph: {
-    textAlign: 'center',
   },
 });
 

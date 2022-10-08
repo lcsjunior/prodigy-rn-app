@@ -31,7 +31,3 @@ react-devtools
 2\. Reactotron:<br>
 <https://github.com/infinitered/reactotron/releases><br>
 <https://github.com/infinitered/reactotron/blob/master/docs/quick-start-react-native.md>
-
-3\. React Native Debugger:<br>
-<https://github.com/jhen0409/react-native-debugger/releases><br>
-<https://github.com/jhen0409/react-native-debugger/blob/master/docs/getting-started.md>

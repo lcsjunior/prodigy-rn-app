@@ -1,14 +1,15 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useLinkTo } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
-import { Card, MD2Colors, Text, useTheme } from 'react-native-paper';
+import { Card, useTheme } from 'react-native-paper';
 import _ from 'lodash';
 import { messages } from '@utils/messages';
+import { Text } from '@components/Text';
 
 function ChannelItem({ channel }) {
   const { id, channelId, displayName, chData } = channel;
-  const { colors } = useTheme();
   const linkTo = useLinkTo();
+  const { colors } = useTheme();
 
   return (
     <Card
@@ -18,22 +19,32 @@ function ChannelItem({ channel }) {
     >
       <Card.Content>
         <View style={styles.titleWrapper}>
-          {_.isEmpty(chData) && (
-            <Ionicons
-              name="warning-outline"
-              size={20}
-              color={colors.error}
-              style={styles.warnIcon}
-            />
+          {_.isEmpty(chData) ? (
+            <>
+              <Ionicons
+                name="warning-outline"
+                size={20}
+                style={styles.warnIcon}
+                color={colors.error}
+              />
+              <Text
+                numberOfLines={1}
+                color="error"
+                fontSize={15}
+                fontWeight="700"
+              >
+                {messages.channelNotFound}
+              </Text>
+            </>
+          ) : (
+            <Text numberOfLines={1} fontSize={15} fontWeight="700">
+              {displayName || chData?.name}
+            </Text>
           )}
-          <Text
-            numberOfLines={1}
-            style={[styles.title, _.isEmpty(chData) && styles.notFound]}
-          >
-            {displayName || chData?.name || messages.channelNotFound}
-          </Text>
         </View>
-        <Text style={styles.description}>Channel ID: {channelId}</Text>
+        <Text color="secondary" fontSize={13}>
+          Channel ID: {channelId}
+        </Text>
       </Card.Content>
     </Card>
   );
@@ -47,21 +58,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: '800',
-    marginVertical: 2,
-    color: '#60a5fa',
-  },
-  notFound: {
-    fontStyle: 'italic',
-    color: '#fff',
-  },
-  description: {
-    fontSize: 13,
-    marginVertical: 2,
-    color: MD2Colors.grey300,
   },
   warnIcon: {
     marginRight: 6,

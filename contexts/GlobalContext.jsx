@@ -1,6 +1,8 @@
-import { AlertDialog } from '@components/AlertDialog';
-import { ConfirmationDialog } from '@components/ConfirmationDialog';
-import { ProgressDialog } from '@components/ProgressDialog';
+import {
+  AlertDialog,
+  ConfirmationDialog,
+  ProgressDialog,
+} from '@components/Dialog';
 import { useProvideGlobal } from '@hooks/use-provide-global';
 import { createContext, useRef } from 'react';
 

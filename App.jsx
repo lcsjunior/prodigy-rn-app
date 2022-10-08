@@ -12,7 +12,7 @@ import { usePreferences } from '@hooks/use-preferences';
 import { PreferencesProvider } from '@contexts/PreferencesContext';
 import { AuthProvider } from '@contexts/AuthContext';
 import * as Font from 'expo-font';
-import { customFonts } from '@core/fonts';
+import { fonts } from '@core/fonts';
 import { ToastProvider } from 'react-native-toast-notifications';
 import { GlobalProvider } from '@contexts/GlobalContext';
 import { fetcher } from '@libs/base-api';
@@ -25,7 +25,7 @@ function Main() {
 
   useEffect(() => {
     async function prepare() {
-      await Font.loadAsync(customFonts);
+      await Font.loadAsync(fonts);
       setAppIsReady(true);
     }
     prepare();

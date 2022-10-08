@@ -8,8 +8,12 @@ import {
 } from 'react-native-paper';
 import merge from 'deepmerge';
 
-const CombinedDefaultTheme = merge(NavigationDefaultTheme, PaperDefaultTheme);
-const CombinedDarkTheme = merge(NavigationDarkTheme, PaperDarkTheme);
+const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
+const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
+
+// https://www.htmlcsscolor.com/hex/86bbfc
+// https://mobilepalette.colorion.co/
+// https://smart-swatch.netlify.app/#86bbfc
 
 const themes = {
   light: {
@@ -22,13 +26,16 @@ const themes = {
     ...CombinedDarkTheme,
     colors: {
       ...CombinedDarkTheme.colors,
-      primary: '#60a5fa',
-      accent: '#60a5fa',
-      background: '#111111',
+      primary: '#86bbfc',
+      accent: '#86fcc7',
+      secondary: '#d7d7d7',
+      background: '#121212',
       surface: '#121212',
       card: '#121212',
-      error: '#CF6679',
-      text: '#ffff',
+      error: '#cf6679',
+      text: '#e5e5e7',
+      link: '#83b9fc',
+      white: '#ffffff',
     },
   },
 };

@@ -1,5 +1,5 @@
+import { Text } from '@components/Text';
 import { SectionList, StyleSheet, View } from 'react-native';
-import { Paragraph } from 'react-native-paper';
 import { ChannelItem } from './ChannelItem';
 
 function ChannelList({ channels }) {
@@ -20,7 +20,7 @@ function ChannelList({ channels }) {
       renderItem={({ item: channel }) => <ChannelItem channel={channel} />}
       ListEmptyComponent={() => (
         <View style={styles.emptyListWrapper}>
-          <Paragraph>You don&#39;t have any channel yet</Paragraph>
+          <Text fontSize={18}>You don&#39;t have any channel yet.</Text>
         </View>
       )}
     />

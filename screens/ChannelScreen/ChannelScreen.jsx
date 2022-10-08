@@ -1,6 +1,7 @@
 import { DockedFormFooter } from '@components/DockedFormFooter';
 import { ScreenActivityIndicator } from '@components/ScreenActivityIndicator';
 import { ScreenWrapper } from '@components/ScreenWrapper';
+import { Text } from '@components/Text';
 import { useChannels } from '@hooks/use-channels';
 import { useGlobal } from '@hooks/use-global';
 import { useReducerForm } from '@hooks/use-reducer-form';
@@ -9,7 +10,7 @@ import { isBlank } from '@utils/string-helpers';
 import { useLayoutEffect, useState } from 'react';
 import { Keyboard, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { HelperText, Paragraph, TextInput } from 'react-native-paper';
+import { HelperText, TextInput } from 'react-native-paper';
 
 function ChannelScreen({ navigation, route }) {
   const { params } = route;
@@ -34,6 +35,7 @@ function ChannelScreen({ navigation, route }) {
     errors,
     setFormValues,
     setFormErrors,
+    resetFormErrors,
     handleInputChange,
     handleInputFocus,
   } = useReducerForm({
@@ -42,7 +44,7 @@ function ChannelScreen({ navigation, route }) {
     writeAPIKey: channel?.writeAPIKey,
     displayName: channel?.displayName,
   });
-  const { alert, progressDialog } = useGlobal();
+  const { alert, progress } = useGlobal();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -55,13 +57,13 @@ function ChannelScreen({ navigation, route }) {
   }
 
   const handleChannelEditing = async () => {
-    Keyboard.dismiss();
+    resetFormErrors();
     setFormValues({ displayName: '' });
     setChDataName('');
     if (isBlank(values.channelId)) {
       setFormErrors({ channelId: messages.isRequired });
     } else {
-      progressDialog.show();
+      progress.show();
       try {
         const resp = await checkChannelAccess(
           values.channelId,
@@ -85,16 +87,17 @@ function ChannelScreen({ navigation, route }) {
       } catch (err) {
         setFormErrors({ channelId: messages.channelNotFound });
       }
-      progressDialog.hide();
+      progress.hide();
     }
   };
 
   const handleSavePress = async () => {
     Keyboard.dismiss();
+    resetFormErrors();
     if (isBlank(values.channelId)) {
       setFormErrors({ channelId: messages.isRequired });
     } else {
-      progressDialog.show();
+      progress.show();
       try {
         const resp = await checkChannelAccess(
           values.channelId,
@@ -117,17 +120,17 @@ function ChannelScreen({ navigation, route }) {
       } catch (err) {
         setFormErrors({ channelId: messages.channelNotFound });
       }
-      progressDialog.hide();
+      progress.hide();
     }
   };
 
   const handleDeletePress = async () => {
-    progressDialog.show();
+    progress.show();
     try {
       await deleteChannel();
       navigation.goBack();
     } catch (err) {}
-    progressDialog.hide();
+    progress.hide();
   };
 
   return (
@@ -153,9 +156,9 @@ function ChannelScreen({ navigation, route }) {
           )}
           <View style={styles.chData}>
             {chDataName && (
-              <Paragraph style={styles.chDataText} numberOfLines={1}>
+              <Text numberOfLines={1} color="white">
                 {chDataName}
-              </Paragraph>
+              </Text>
             )}
           </View>
         </View>
@@ -213,10 +216,6 @@ const styles = StyleSheet.create({
   chData: {
     marginBottom: 24,
     marginLeft: 6,
-  },
-  chDataText: {
-    fontSize: 13,
-    color: '#60a5fa',
   },
 });
 

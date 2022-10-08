@@ -22,7 +22,12 @@ const formReducer = (state, action) => {
     case 'form/updateErrors':
       return {
         ...state,
-        errors: action.errors,
+        errors: { ...state.errors, ...action.errors },
+      };
+    case 'form/resetErrors':
+      return {
+        ...state,
+        errors: {},
       };
     case 'form/setValue':
       return {
@@ -53,6 +58,10 @@ const useReducerForm = (initialValues) => {
     dispatch({ type: 'form/updateErrors', errors });
   };
 
+  const resetFormErrors = () => {
+    dispatch({ type: 'form/resetErrors' });
+  };
+
   const handleInputChange = (name) => {
     return (text) => dispatch({ type: 'form/setValue', name, value: text });
   };
@@ -65,6 +74,7 @@ const useReducerForm = (initialValues) => {
     ...state,
     setFormValues,
     setFormErrors,
+    resetFormErrors,
     handleInputChange,
     handleInputFocus,
   };

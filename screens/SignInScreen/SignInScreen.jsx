@@ -1,4 +1,7 @@
+import { Button } from '@components/Button';
+import { Link } from '@components/Link';
 import { ScreenWrapper } from '@components/ScreenWrapper';
+import { Text } from '@components/Text';
 import { useAuth } from '@hooks/use-auth';
 import { useReducerForm } from '@hooks/use-reducer-form';
 import { useFocusEffect } from '@react-navigation/native';
@@ -6,17 +9,10 @@ import { messages } from '@utils/messages';
 import { isBlank } from '@utils/string-helpers';
 import { useCallback, useState } from 'react';
 import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
-import {
-  Button,
-  HelperText,
-  Text,
-  TextInput,
-  useTheme,
-} from 'react-native-paper';
+import { HelperText, TextInput } from 'react-native-paper';
 import { useToast } from 'react-native-toast-notifications';
 
 function SignInScreen() {
-  const { colors } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
   const { onLogin } = useAuth();
@@ -95,11 +91,9 @@ function SignInScreen() {
         )}
       </View>
       <View style={styles.forgotWrapper}>
-        <TouchableOpacity onPress={() => console.log('Pressed')}>
-          <Text style={[styles.baseText, { color: colors.primary }]}>
-            Forgot your password?
-          </Text>
-        </TouchableOpacity>
+        <Link fontSize={13} onPress={() => console.log('Pressed')}>
+          Forgot your password?
+        </Link>
       </View>
       <Button
         mode="contained"
@@ -111,18 +105,10 @@ function SignInScreen() {
         {isSubmitting ? 'Signing in' : 'Sign in'}
       </Button>
       <View style={styles.signupWrapper}>
-        <Text style={styles.baseText}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => console.log('Pressed')}>
-          <Text
-            style={[
-              styles.baseText,
-              styles.signupText,
-              { color: colors.primary },
-            ]}
-          >
-            Sign up
-          </Text>
-        </TouchableOpacity>
+        <Text fontSize={13}>Don’t have an account? </Text>
+        <Link fontSize={13} onPress={() => console.log('Pressed')}>
+          Sign up
+        </Link>
       </View>
     </ScreenWrapper>
   );
@@ -137,15 +123,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
   },
-  baseText: {
-    fontSize: 13,
-  },
   logo: {
     fontFamily: 'Astro-Space',
+    fontSize: 32,
+    color: 'white',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
     textShadowColor: '#000',
-    fontSize: 32,
     textAlign: 'center',
     marginBottom: 24,
   },
@@ -162,9 +146,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 6,
     justifyContent: 'center',
-  },
-  signupText: {
-    fontWeight: 'bold',
   },
 });
 

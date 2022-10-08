@@ -1,8 +1,8 @@
 import { StyleSheet, View } from 'react-native';
-import { Button, MD2Colors, useTheme } from 'react-native-paper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useGlobal } from '@hooks/use-global';
 import { useNavigation } from '@react-navigation/native';
+import { Button } from '@components/Button';
 
 function DockedFormFooter({
   isDiscardVisible = true,
@@ -10,7 +10,6 @@ function DockedFormFooter({
   onSavePress,
   onDeletePress,
 }) {
-  const { colors } = useTheme();
   const navigation = useNavigation();
   const { confirm } = useGlobal();
 
@@ -53,16 +52,15 @@ function DockedFormFooter({
       </Button>
       {isDiscardVisible && (
         <Button
-          icon={() => (
+          icon={({ color }) => (
             <Ionicons
               name="chevron-back-circle-outline"
               size={24}
-              color={MD2Colors.grey300}
+              color={color}
             />
           )}
           mode="contained"
           compact
-          buttonColor={MD2Colors.grey800}
           style={styles.button}
           onPress={handleDiscardPress}
         >
@@ -71,12 +69,11 @@ function DockedFormFooter({
       )}
       {isDeleteVisible && (
         <Button
-          icon={() => (
-            <Ionicons name="trash-outline" size={24} color={colors.error} />
+          icon={(color) => (
+            <Ionicons name="trash-outline" size={24} color={color} />
           )}
           mode="contained"
           compact
-          buttonColor={MD2Colors.grey900}
           style={styles.button}
           onPress={handleDeletePress}
         >
