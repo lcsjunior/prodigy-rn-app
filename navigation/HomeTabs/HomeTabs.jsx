@@ -22,7 +22,7 @@ function HomeTabs({ navigation }) {
       headerRight: () => (
         <Menu
           visible={isMenuOpen}
-          onDismiss={onMenuToggle}
+          onDismiss={onMenuClose}
           anchor={
             <IconButton
               icon={global.moreIcon}
@@ -41,7 +41,7 @@ function HomeTabs({ navigation }) {
         </Menu>
       ),
     });
-  }, [navigation, isMenuOpen, onMenuToggle, linkTo]);
+  }, [navigation, isMenuOpen, onMenuClose, onMenuToggle, linkTo]);
 
   return (
     <Tab.Navigator
