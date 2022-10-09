@@ -42,10 +42,10 @@ const useChannels = (id) => {
     );
   };
 
-  const checkChannelAccess = (channelId, readAPIKey) => {
+  const checkChannelAccess = (channelId, readApiKey) => {
     return thingSpeakApi.get(`channels/${channelId}/status.json`, {
       params: {
-        api_key: readAPIKey,
+        api_key: readApiKey,
         results: 0,
       },
     });

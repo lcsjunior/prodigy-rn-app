@@ -40,8 +40,8 @@ function ChannelScreen({ navigation, route }) {
     handleInputFocus,
   } = useReducerForm({
     channelId: channel?.channelId,
-    readAPIKey: channel?.readAPIKey,
-    writeAPIKey: channel?.writeAPIKey,
+    readApiKey: channel?.readApiKey,
+    writeApiKey: channel?.writeApiKey,
     displayName: channel?.displayName,
   });
   const { alert, progress } = useGlobal();
@@ -67,11 +67,11 @@ function ChannelScreen({ navigation, route }) {
       try {
         const resp = await checkChannelAccess(
           values.channelId,
-          values.readAPIKey
+          values.readApiKey
         );
         if (resp.data === '-1') {
           setFormErrors({
-            readAPIKey: values.readAPIKey
+            readApiKey: values.readApiKey
               ? messages.invalidAPIKey
               : messages.isRequired,
           });
@@ -101,11 +101,11 @@ function ChannelScreen({ navigation, route }) {
       try {
         const resp = await checkChannelAccess(
           values.channelId,
-          values.readAPIKey
+          values.readApiKey
         );
         if (resp.data === '-1') {
           setFormErrors({
-            readAPIKey: values.readAPIKey
+            readApiKey: values.readApiKey
               ? messages.invalidAPIKey
               : messages.isRequired,
           });
@@ -167,13 +167,13 @@ function ChannelScreen({ navigation, route }) {
             label="Read API Key"
             mode="flat"
             secureTextEntry
-            value={values.readAPIKey}
-            onChangeText={handleInputChange('readAPIKey')}
-            onFocus={handleInputFocus('readAPIKey')}
-            error={!!errors.readAPIKey}
+            value={values.readApiKey}
+            onChangeText={handleInputChange('readApiKey')}
+            onFocus={handleInputFocus('readApiKey')}
+            error={!!errors.readApiKey}
           />
-          <HelperText type="error" visible={!!errors.readAPIKey}>
-            {errors.readAPIKey}
+          <HelperText type="error" visible={!!errors.readApiKey}>
+            {errors.readApiKey}
           </HelperText>
         </View>
         <View>
@@ -181,12 +181,12 @@ function ChannelScreen({ navigation, route }) {
             label="Write API Key"
             mode="flat"
             secureTextEntry
-            value={values.writeAPIKey}
-            onChangeText={handleInputChange('writeAPIKey')}
-            onFocus={handleInputFocus('writeAPIKey')}
+            value={values.writeApiKey}
+            onChangeText={handleInputChange('writeApiKey')}
+            onFocus={handleInputFocus('writeApiKey')}
           />
-          <HelperText type="error" visible={!!errors.writeAPIKey}>
-            {errors.writeAPIKey}
+          <HelperText type="error" visible={!!errors.writeApiKey}>
+            {errors.writeApiKey}
           </HelperText>
         </View>
         <View>
