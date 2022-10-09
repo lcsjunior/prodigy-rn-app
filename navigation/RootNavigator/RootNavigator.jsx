@@ -3,9 +3,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SignInScreen } from '@screens/SignInScreen';
 import { NotFoundScreen } from '@screens/NotFoundScreen';
 import { useAuth } from '@hooks/use-auth';
-import { CustomNavigationBar } from '@navigation/CustomNavigationBar';
 import { SettingsScreen } from '@screens/SettingsScreen';
 import { ChannelScreen } from '@screens/ChannelScreen';
+import { LogoTitle } from '@components/LogoTitle';
 
 const Stack = createStackNavigator();
 
@@ -13,16 +13,16 @@ function RootNavigator() {
   const { isSignedIn } = useAuth();
 
   return (
-    <Stack.Navigator
-      detachInactiveScreens={true}
-      screenOptions={{
-        header: (props) => <CustomNavigationBar {...props} />,
-        detachPreviousScreen: true,
-      }}
-    >
+    <Stack.Navigator>
       {isSignedIn ? (
         <Stack.Group>
-          <Stack.Screen name="Home" component={HomeTabs} />
+          <Stack.Screen
+            name="Home"
+            component={HomeTabs}
+            options={{
+              headerTitle: (props) => <LogoTitle {...props} />,
+            }}
+          />
           <Stack.Screen
             name="Settings"
             component={SettingsScreen}

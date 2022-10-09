@@ -1,8 +1,19 @@
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { Text } from '@components/Text';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 
-function NotFoundScreen({ route }) {
+function NotFoundScreen({ navigation, route }) {
+  useFocusEffect(
+    useCallback(() => {
+      console.log('Focused');
+      return () => {
+        console.log('Unfocused');
+      };
+    }, [])
+  );
+
   return (
     <ScreenWrapper contentContainerStyle={styles.container}>
       <Text fontSize={18}>Screen not found</Text>

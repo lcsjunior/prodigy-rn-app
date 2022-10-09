@@ -4,11 +4,10 @@ import { ScreenWrapper } from '@components/ScreenWrapper';
 import { Text } from '@components/Text';
 import { useAuth } from '@hooks/use-auth';
 import { useReducerForm } from '@hooks/use-reducer-form';
-import { useFocusEffect } from '@react-navigation/native';
 import { messages } from '@utils/messages';
 import { isBlank } from '@utils/string-helpers';
-import { useCallback, useState } from 'react';
-import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import { Keyboard, StyleSheet, View } from 'react-native';
 import { HelperText, TextInput } from 'react-native-paper';
 import { useToast } from 'react-native-toast-notifications';
 
@@ -21,15 +20,6 @@ function SignInScreen() {
       username: '',
       password: '',
     });
-
-  useFocusEffect(
-    useCallback(() => {
-      console.log('Focused');
-      return () => {
-        console.log('Unfocused');
-      };
-    }, [])
-  );
 
   const handleSignInPress = async () => {
     Keyboard.dismiss();

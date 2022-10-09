@@ -7,7 +7,7 @@ import { useGlobal } from '@hooks/use-global';
 import { useReducerForm } from '@hooks/use-reducer-form';
 import { messages } from '@utils/messages';
 import { isBlank } from '@utils/string-helpers';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Keyboard, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { HelperText, TextInput } from 'react-native-paper';
@@ -46,7 +46,7 @@ function ChannelScreen({ navigation, route }) {
   });
   const { alert, progress } = useGlobal();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       title,
     });
@@ -200,6 +200,7 @@ function ChannelScreen({ navigation, route }) {
         </View>
       </ScrollView>
       <DockedFormFooter
+        isDiscardVisible={isNew}
         isDeleteVisible={!isNew}
         onSavePress={handleSavePress}
         onDeletePress={handleDeletePress}

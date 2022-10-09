@@ -24,16 +24,18 @@ const themes = {
   },
   dark: {
     ...CombinedDarkTheme,
+    // mode: 'exact',
     colors: {
       ...CombinedDarkTheme.colors,
       primary: '#86bbfc',
-      accent: '#86fcc7',
-      secondary: '#d7d7d7',
-      background: '#121212',
+      accent: '#86bbfc',
+      background: '#010101',
       surface: '#121212',
       card: '#121212',
       error: '#cf6679',
       text: '#e5e5e7',
+      /* customs */
+      secondary: '#d7d7d7',
       link: '#83b9fc',
       white: '#ffffff',
     },

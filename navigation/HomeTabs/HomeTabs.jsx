@@ -2,19 +2,61 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { CloudSetIcon, HomeIcon } from '@components/Icons';
 import { PanelListScreen } from '@screens/PanelListScreen';
 import { ChannelListScreen } from '@screens/ChannelListScreen';
+import { useEffect } from 'react';
+import { IconButton, Menu } from 'react-native-paper';
+import { useLinkTo } from '@react-navigation/native';
+import { useDisclose } from '@hooks/use-disclosure';
 
 const Tab = createMaterialBottomTabNavigator();
 
-function HomeTabs() {
+function HomeTabs({ navigation }) {
+  const {
+    isOpen: isMenuOpen,
+    onClose: onMenuClose,
+    onToggle: onMenuToggle,
+  } = useDisclose();
+  const linkTo = useLinkTo();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Menu
+          visible={isMenuOpen}
+          onDismiss={onMenuToggle}
+          anchor={
+            <IconButton
+              icon={global.moreIcon}
+              size={24}
+              onPress={onMenuToggle}
+            />
+          }
+        >
+          <Menu.Item
+            title="Settings"
+            onPress={() => {
+              linkTo('/settings');
+              onMenuClose();
+            }}
+          />
+        </Menu>
+      ),
+    });
+  }, [navigation, isMenuOpen, onMenuToggle, linkTo]);
+
   return (
-    <Tab.Navigator shifting>
+    <Tab.Navigator
+      shifting
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Tab.Screen
         name="HomeTab"
         component={PanelListScreen}
         options={{
           tabBarLabel: 'My Panels',
-          tabBarIcon: ({ color }) => (
-            <HomeIcon width="24" height="24" color={color} />
+          tabBarIcon: ({ color, size }) => (
+            <HomeIcon color={color} size={size} />
           ),
         }}
       />
@@ -23,8 +65,8 @@ function HomeTabs() {
         component={ChannelListScreen}
         options={{
           tabBarLabel: 'My Channels',
-          tabBarIcon: ({ color }) => (
-            <CloudSetIcon width="24" height="24" color={color} />
+          tabBarIcon: ({ color, size }) => (
+            <CloudSetIcon color={color} size={size} />
           ),
         }}
       />
