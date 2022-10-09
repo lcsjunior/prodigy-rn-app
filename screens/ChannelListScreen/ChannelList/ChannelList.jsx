@@ -1,23 +1,22 @@
 import { Text } from '@components/Text';
-import { SectionList, StyleSheet, View } from 'react-native';
+import { useRef } from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { ChannelItem } from './ChannelItem';
 
 function ChannelList({ channels }) {
-  const data =
-    channels.length > 0
-      ? [
-          {
-            title: 'ThingSpeak™',
-            data: channels,
-          },
-        ]
-      : [];
+  const flatListRef = useRef(null);
+
+  const renderItem = ({ item: channel }) => {
+    return <ChannelItem channel={channel} />;
+  };
+
   return (
-    <SectionList
+    <FlatList
+      ref={flatListRef}
       contentContainerStyle={styles.container}
-      sections={data}
+      data={channels}
       keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item: channel }) => <ChannelItem channel={channel} />}
+      renderItem={renderItem}
       ListEmptyComponent={() => (
         <View style={styles.emptyListWrapper}>
           <Text fontSize={18}>You don&#39;t have any channel yet.</Text>

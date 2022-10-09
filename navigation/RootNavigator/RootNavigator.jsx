@@ -6,6 +6,7 @@ import { useAuth } from '@hooks/use-auth';
 import { SettingsScreen } from '@screens/SettingsScreen';
 import { ChannelScreen } from '@screens/ChannelScreen';
 import { LogoTitle } from '@components/LogoTitle';
+import { PanelScreen } from '@screens/PanelScreen';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,11 @@ function RootNavigator() {
             name="ChannelDetail"
             component={ChannelScreen}
             options={{ title: 'Channel' }}
+          />
+          <Stack.Screen
+            name="PanelDetail"
+            component={PanelScreen}
+            options={{ title: 'Panel' }}
           />
         </Stack.Group>
       ) : (

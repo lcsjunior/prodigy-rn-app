@@ -10,7 +10,6 @@ function ChannelItem({ channel }) {
   const { id, channelId, displayName, chData } = channel;
   const linkTo = useLinkTo();
   const { colors } = useTheme();
-
   return (
     <Card
       style={styles.card}

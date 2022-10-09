@@ -95,8 +95,14 @@ function SignInScreen() {
         {isSubmitting ? 'Signing in' : 'Sign in'}
       </Button>
       <View style={styles.signupWrapper}>
-        <Text fontSize={13}>Don’t have an account? </Text>
-        <Link fontSize={13} onPress={() => console.log('Pressed')}>
+        <Text fontSize={13} fontWeight="700">
+          Don’t have an account?{' '}
+        </Text>
+        <Link
+          fontSize={13}
+          fontWeight="700"
+          onPress={() => console.log('Pressed')}
+        >
           Sign up
         </Link>
       </View>

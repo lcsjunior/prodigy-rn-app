@@ -1,4 +1,6 @@
-import 'react-native-gesture-handler';
+import './shims';
+import 'react-native-reanimated';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import * as SplashScreen from 'expo-splash-screen';
@@ -16,6 +18,12 @@ import { fonts } from '@core/fonts';
 import { ToastProvider } from 'react-native-toast-notifications';
 import { GlobalProvider } from '@contexts/GlobalContext';
 import { fetcher } from '@libs/base-api';
+import { Platform, UIManager } from 'react-native';
+
+if (Platform.OS === 'android') {
+  UIManager.setLayoutAnimationEnabledExperimental &&
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,22 +50,24 @@ function Main() {
   }
 
   return (
-    <ToastProvider animationDuration={100}>
-      <PaperProvider theme={theme}>
-        <GlobalProvider>
-          <SafeAreaProvider>
-            <NavigationContainer
-              theme={theme}
-              linking={linking}
-              onReady={onReady}
-            >
-              <RootNavigator />
-            </NavigationContainer>
-            <StatusBar style={isThemeDark ? 'light' : 'dark'} />
-          </SafeAreaProvider>
-        </GlobalProvider>
-      </PaperProvider>
-    </ToastProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ToastProvider animationDuration={100}>
+        <PaperProvider theme={theme}>
+          <GlobalProvider>
+            <SafeAreaProvider>
+              <NavigationContainer
+                theme={theme}
+                linking={linking}
+                onReady={onReady}
+              >
+                <RootNavigator />
+              </NavigationContainer>
+              <StatusBar style={isThemeDark ? 'light' : 'dark'} />
+            </SafeAreaProvider>
+          </GlobalProvider>
+        </PaperProvider>
+      </ToastProvider>
+    </GestureHandlerRootView>
   );
 }
 

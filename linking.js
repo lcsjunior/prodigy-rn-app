@@ -1,11 +1,19 @@
+const defaultParser = {
+  parse: {
+    id: Number,
+  },
+};
+
 const config = {
   screens: {
     Settings: 'settings',
     ChannelDetail: {
       path: 'channels/:id',
-      parse: {
-        id: Number,
-      },
+      ...defaultParser,
+    },
+    PanelDetail: {
+      path: 'panels/:id',
+      ...defaultParser,
     },
     NotFound: '*',
   },
