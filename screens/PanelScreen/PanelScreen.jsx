@@ -1,12 +1,11 @@
 import { DockedFormFooter } from '@components/DockedFormFooter';
 import { ScreenActivityIndicator } from '@components/ScreenActivityIndicator';
 import { ScreenWrapper } from '@components/ScreenWrapper';
-import { Text } from '@components/Text';
 import { usePanels } from '@hooks/use-panels';
 import { useGlobal } from '@hooks/use-global';
 import { useReducerForm } from '@hooks/use-reducer-form';
 import { messages } from '@utils/messages';
-import { isBlank } from '@utils/string-helpers';
+import stringHelper from '@utils/string-helper';
 import { useEffect } from 'react';
 import { Keyboard, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -44,7 +43,7 @@ function PanelScreen({ navigation, route }) {
   const handleSavePress = async () => {
     Keyboard.dismiss();
     resetFormErrors();
-    if (isBlank(values.name)) {
+    if (stringHelper.isBlank(values.name)) {
       setFormErrors({ name: messages.isRequired });
     } else {
       progress.show();

@@ -14,8 +14,8 @@ function PanelListScreen() {
     return <ScreenActivityIndicator />;
   }
 
-  const handleDragEnd = ({ data }) => {
-    bulkUpdatePanel(data);
+  const handleDragEnd = ({ data: sortedPanels }) => {
+    bulkUpdatePanel(sortedPanels);
   };
 
   return (

@@ -5,7 +5,7 @@ import { Text } from '@components/Text';
 import { useAuth } from '@hooks/use-auth';
 import { useReducerForm } from '@hooks/use-reducer-form';
 import { messages } from '@utils/messages';
-import { isBlank } from '@utils/string-helpers';
+import stringHelper from '@utils/string-helper';
 import { useState } from 'react';
 import { Keyboard, StyleSheet, View } from 'react-native';
 import { HelperText, TextInput } from 'react-native-paper';
@@ -25,11 +25,11 @@ function SignInScreen() {
     Keyboard.dismiss();
     toast.hideAll();
     let fails = false;
-    if (isBlank(values.username)) {
+    if (stringHelper.isBlank(values.username)) {
       setFormErrors({ username: messages.isRequired });
       fails = true;
     }
-    if (isBlank(values.password)) {
+    if (stringHelper.isBlank(values.password)) {
       setFormErrors({ password: messages.isRequired });
       fails = true;
     }

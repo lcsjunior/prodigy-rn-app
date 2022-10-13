@@ -6,7 +6,7 @@ import { useChannels } from '@hooks/use-channels';
 import { useGlobal } from '@hooks/use-global';
 import { useReducerForm } from '@hooks/use-reducer-form';
 import { messages } from '@utils/messages';
-import { isBlank } from '@utils/string-helpers';
+import stringHelper from '@utils/string-helper';
 import { useEffect, useState } from 'react';
 import { Keyboard, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -60,7 +60,7 @@ function ChannelScreen({ navigation, route }) {
     resetFormErrors();
     setFormValues({ displayName: '' });
     setChDataName('');
-    if (isBlank(values.channelId)) {
+    if (stringHelper.isBlank(values.channelId)) {
       setFormErrors({ channelId: messages.isRequired });
     } else {
       progress.show();
@@ -94,7 +94,7 @@ function ChannelScreen({ navigation, route }) {
   const handleSavePress = async () => {
     Keyboard.dismiss();
     resetFormErrors();
-    if (isBlank(values.channelId)) {
+    if (stringHelper.isBlank(values.channelId)) {
       setFormErrors({ channelId: messages.isRequired });
     } else {
       progress.show();

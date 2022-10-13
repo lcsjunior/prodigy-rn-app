@@ -2,7 +2,7 @@ import { Button } from '@components/Button';
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { useAuth } from '@hooks/use-auth';
 import { useGlobal } from '@hooks/use-global';
-import { getUserInitiais } from '@utils/string-helpers';
+import stringHelper from '@utils/string-helper';
 import { StyleSheet } from 'react-native';
 import { Avatar, List } from 'react-native-paper';
 import sleep from 'sleep-promise';
@@ -13,7 +13,7 @@ function SettingsScreen() {
 
   const { username, firstName = '', lastName = '' } = user;
   const fullname = `${firstName || ''} ${lastName || ''}`.trim();
-  const initials = getUserInitiais(fullname, username);
+  const initials = stringHelper.getUserInitiais(fullname, username);
 
   const handleSignOutPress = async () => {
     try {

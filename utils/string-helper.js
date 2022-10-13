@@ -1,4 +1,4 @@
-import { coalesce } from './array-helpers';
+import arrayHelper from './array-helper';
 
 const isBlank = (str) =>
   str === null || str === undefined || str.trim().length === 0;
@@ -14,10 +14,16 @@ const getInitials = (name, { maxInitials }) => {
 };
 
 const getUserInitiais = (...args) => {
-  const name = coalesce(args);
+  const name = arrayHelper.coalesce(args);
   return getInitials(name, {
     maxInitials: 2,
   });
 };
 
-export { isBlank, getInitials, getUserInitiais };
+const stringHelper = {
+  isBlank,
+  getInitials,
+  getUserInitiais,
+};
+
+export default stringHelper;
