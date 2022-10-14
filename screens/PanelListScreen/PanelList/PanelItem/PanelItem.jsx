@@ -13,7 +13,7 @@ function PanelItem({ panel, drag }) {
       <Card
         style={styles.card}
         mode="elevated"
-        onPress={() => linkTo(`/panels/${id}`)}
+        onPress={() => linkTo(`/dashboard/${id}`)}
         onLongPress={drag}
       >
         <Card.Content>

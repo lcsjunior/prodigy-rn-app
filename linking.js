@@ -15,6 +15,10 @@ const config = {
       path: 'panels/:id',
       ...defaultParser,
     },
+    Dashboard: {
+      path: 'dashboard/:id',
+      ...defaultParser,
+    },
     NotFound: '*',
   },
 };
