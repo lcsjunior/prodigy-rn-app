@@ -1,17 +1,18 @@
 import { StyleSheet } from 'react-native';
 import { Text as NPText, useTheme } from 'react-native-paper';
 
-function Text({ children, color, fontWeight, fontSize, style, ...props }) {
-  const { colors } = useTheme();
+function Text({ children, color, bold, fontSize, style, ...props }) {
+  const { fonts, colors } = useTheme();
+
+  const shortStyle = {
+    color: colors[color || 'text'],
+    // https://github.com/callstack/react-native-paper/issues/1449
+    fontFamily: bold ? fonts.bold.fontFamily : fonts.medium.fontFamily,
+    fontSize,
+  };
+
   return (
-    <NPText
-      style={[
-        { color: colors[color || 'text'], fontWeight, fontSize },
-        styles.text,
-        style,
-      ]}
-      {...props}
-    >
+    <NPText style={[shortStyle, styles.text, style]} {...props}>
       {children}
     </NPText>
   );

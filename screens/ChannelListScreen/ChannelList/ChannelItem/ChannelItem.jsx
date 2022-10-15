@@ -26,17 +26,12 @@ function ChannelItem({ channel }) {
                 style={styles.warnIcon}
                 color={colors.error}
               />
-              <Text
-                numberOfLines={1}
-                color="error"
-                fontSize={15}
-                fontWeight="700"
-              >
+              <Text numberOfLines={1} color="error" fontSize={15} bold>
                 {messages.channelNotFound}
               </Text>
             </>
           ) : (
-            <Text numberOfLines={1} fontSize={15} fontWeight="700">
+            <Text numberOfLines={1} fontSize={15} bold>
               {displayName || chData?.name}
             </Text>
           )}

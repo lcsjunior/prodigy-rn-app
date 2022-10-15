@@ -95,14 +95,10 @@ function SignInScreen() {
         {isSubmitting ? 'Signing in' : 'Sign in'}
       </Button>
       <View style={styles.signupWrapper}>
-        <Text fontSize={13} fontWeight="700">
+        <Text fontSize={13} bold>
           Don’t have an account?{' '}
         </Text>
-        <Link
-          fontSize={13}
-          fontWeight="700"
-          onPress={() => console.log('Pressed')}
-        >
+        <Link fontSize={13} bold onPress={() => console.log('Pressed')}>
           Sign up
         </Link>
       </View>
@@ -120,7 +116,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   logo: {
-    fontFamily: 'Astro-Space',
+    fontFamily: 'AstroSpace',
     fontSize: 32,
     color: 'white',
     textShadowOffset: { width: 1, height: 1 },

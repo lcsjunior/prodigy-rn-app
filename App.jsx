@@ -24,6 +24,10 @@ import { GlobalProvider } from '@contexts/GlobalContext';
 import { fetcher } from '@libs/base-api';
 import { LogBox, Platform, StyleSheet, UIManager } from 'react-native';
 
+if (__DEV__ && global.reactotronEnabled) {
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
+
 LogBox.ignoreLogs(['The native module for Flipper seems unavailable.']);
 
 if (Platform.OS === 'android') {

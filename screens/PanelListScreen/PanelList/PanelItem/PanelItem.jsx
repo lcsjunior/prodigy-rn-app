@@ -1,14 +1,16 @@
 import { useLinkTo } from '@react-navigation/native';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import { Card } from 'react-native-paper';
+import { Card, useTheme } from 'react-native-paper';
 import { Text } from '@components/Text';
 import { ScaleDecorator } from 'react-native-draggable-flatlist';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { coolGray } from '@core/themes';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { memo } from 'react';
 
 function PanelItem({ panel, drag }) {
   const { id, name } = panel;
   const linkTo = useLinkTo();
+  const { colors } = useTheme();
+
   return (
     <ScaleDecorator>
       <TouchableWithoutFeedback
@@ -18,17 +20,8 @@ function PanelItem({ panel, drag }) {
         <Card style={styles.card} mode="elevated">
           <Card.Content style={styles.cardContent}>
             <View style={styles.titleWrapper}>
-              <MaterialCommunityIcons
-                name="drag-vertical"
-                size={18}
-                color={coolGray['200']}
-              />
-              <Text
-                numberOfLines={1}
-                fontSize={15}
-                fontWeight="700"
-                style={styles.name}
-              >
+              <Ionicons name="reorder-three" size={16} color={colors.text} />
+              <Text numberOfLines={1} fontSize={15} bold style={styles.name}>
                 {name}
               </Text>
             </View>
@@ -52,8 +45,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   name: {
-    marginLeft: 6,
+    marginLeft: 8,
   },
 });
 
-export { PanelItem };
+const WrappedPanelItem = memo(PanelItem);
+
+export { WrappedPanelItem as PanelItem };

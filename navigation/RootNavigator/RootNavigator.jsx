@@ -18,6 +18,9 @@ function RootNavigator() {
     <Stack.Navigator
       screenOptions={{
         headerTransparent: true,
+        headerTitleStyle: {
+          fontFamily: 'IBMPlexSans_500Medium',
+        },
       }}
     >
       {isSignedIn ? (

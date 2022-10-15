@@ -11,12 +11,36 @@ import merge from 'deepmerge';
 const CombinedDefaultTheme = merge(NavigationDefaultTheme, PaperDefaultTheme);
 const CombinedDarkTheme = merge(NavigationDarkTheme, PaperDarkTheme);
 
+const fonts = {
+  light: {
+    fontFamily: 'IBMPlexSans_300Light',
+    fontWeight: 'normal',
+  },
+  regular: {
+    fontFamily: 'IBMPlexSans_400Regular',
+    fontWeight: 'normal',
+  },
+  medium: {
+    fontFamily: 'IBMPlexSans_500Medium',
+    fontWeight: 'normal',
+  },
+  thin: {
+    fontFamily: 'IBMPlexSans_100Thin',
+    fontWeight: 'normal',
+  },
+  bold: {
+    fontFamily: 'IBMPlexSans_600SemiBold',
+    fontWeight: 'bold',
+  },
+};
+
 const themes = {
   light: {
     ...CombinedDefaultTheme,
     colors: {
       ...CombinedDefaultTheme.colors,
     },
+    fonts,
   },
   dark: {
     ...CombinedDarkTheme,
@@ -31,10 +55,11 @@ const themes = {
       error: '#cf6679',
       text: '#f4f6fb',
       /* custom */
-      secondary: '#d7d7d7',
+      secondary: '#c3c4c8',
       link: '#83b9fc',
       white: '#ffffff',
     },
+    fonts,
   },
 };
 

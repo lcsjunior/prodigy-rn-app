@@ -7,7 +7,7 @@ function LogoTitle() {
 
 const styles = StyleSheet.create({
   logo: {
-    fontFamily: 'Astro-Space',
+    fontFamily: 'AstroSpace',
     fontSize: 24,
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 1,

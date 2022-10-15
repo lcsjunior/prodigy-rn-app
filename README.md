@@ -16,15 +16,25 @@ yarn android
 # or
 expo start
 # or
-F5
+# See React Native Tools Extension
 ```
 
 ## DevTools for React Native:
 
-1\.Flipper<br>
-<https://github.com/facebook/flipper><br>
+**1\.Flipper**
+
+<https://github.com/facebook/flipper>
+
 <https://reactnavigation.org/docs/devtools>
 
-2\. Reactotron:<br>
-<https://github.com/infinitered/reactotron/releases><br>
+**2\. Reactotron:**
+
+<https://github.com/infinitered/reactotron/releases>
+
 <https://github.com/infinitered/reactotron/blob/master/docs/quick-start-react-native.md>
+
+_See:_
+
+```js
+global.reactotronEnabled;
+```
