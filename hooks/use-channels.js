@@ -5,7 +5,7 @@ import { thingSpeakApi } from '@libs/thingspeak-api';
 
 const useChannels = (id) => {
   const { data: channels, mutate: mutateChannels, error } = useSWR('/channels');
-  const channel = id ? channels.find((item) => item.id === id) : null;
+  const channel = _.find(channels, { id });
 
   const createChannel = (values) => {
     return mutateChannels(

@@ -87,7 +87,7 @@ function SignInScreen() {
       </View>
       <Button
         mode="contained"
-        style={styles.signInButton}
+        contentStyle={styles.signInButton}
         onPress={handleSignInPress}
         loading={isSubmitting}
         disabled={isSubmitting}
@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: 'white',
     textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
-    textShadowColor: '#000',
+    textShadowRadius: 1,
+    textShadowColor: '#1a1a1a',
     textAlign: 'center',
     marginBottom: 24,
   },

@@ -3,11 +3,16 @@ import { StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import WebView from 'react-native-webview';
 import Constants from 'expo-constants';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 function DashboardScreen() {
   const { colors } = useTheme();
+  const headerHeight = useHeaderHeight();
+
   return (
-    <ScreenWrapper contentContainerStyle={styles.container}>
+    <ScreenWrapper
+      contentContainerStyle={[styles.container, { paddingTop: headerHeight }]}
+    >
       <WebView
         nestedScrollEnabled
         source={{

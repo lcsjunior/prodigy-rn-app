@@ -31,6 +31,6 @@ function AlertDialog(props, ref) {
     </Portal>
   );
 }
-const EnhancedDialog = forwardRef(AlertDialog);
+const WrappedDialog = forwardRef(AlertDialog);
 
-export { EnhancedDialog as AlertDialog };
+export { WrappedDialog as AlertDialog };

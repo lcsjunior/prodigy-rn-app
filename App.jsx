@@ -1,7 +1,11 @@
 import './shims';
 import 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
+import { useFlipper } from '@react-navigation/devtools';
 import { Provider as PaperProvider } from 'react-native-paper';
 import * as SplashScreen from 'expo-splash-screen';
 import { linking } from './linking';
@@ -18,7 +22,9 @@ import { fonts } from '@core/fonts';
 import { ToastProvider } from 'react-native-toast-notifications';
 import { GlobalProvider } from '@contexts/GlobalContext';
 import { fetcher } from '@libs/base-api';
-import { Platform, UIManager } from 'react-native';
+import { LogBox, Platform, StyleSheet, UIManager } from 'react-native';
+
+LogBox.ignoreLogs(['The native module for Flipper seems unavailable.']);
 
 if (Platform.OS === 'android') {
   UIManager.setLayoutAnimationEnabledExperimental &&
@@ -28,8 +34,11 @@ if (Platform.OS === 'android') {
 SplashScreen.preventAutoHideAsync();
 
 function Main() {
+  const navigationRef = useNavigationContainerRef();
   const [appIsReady, setAppIsReady] = useState(false);
   const { isThemeDark, theme } = usePreferences();
+
+  useFlipper(navigationRef);
 
   useEffect(() => {
     async function prepare() {
@@ -50,12 +59,13 @@ function Main() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={styles.container}>
       <ToastProvider animationDuration={100}>
         <PaperProvider theme={theme}>
           <GlobalProvider>
             <SafeAreaProvider>
               <NavigationContainer
+                ref={navigationRef}
                 theme={theme}
                 linking={linking}
                 onReady={onReady}
@@ -87,3 +97,9 @@ export default function App() {
     </SWRConfig>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

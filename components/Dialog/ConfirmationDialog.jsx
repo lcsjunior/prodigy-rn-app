@@ -45,6 +45,6 @@ function ConfirmationDialog(props, ref) {
     </Portal>
   );
 }
-const EnhancedDialog = forwardRef(ConfirmationDialog);
+const WrappedDialog = forwardRef(ConfirmationDialog);
 
-export { EnhancedDialog as ConfirmationDialog };
+export { WrappedDialog as ConfirmationDialog };

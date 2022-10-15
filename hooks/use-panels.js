@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 const usePanels = (id) => {
   const { data: panels, mutate: mutatePanels, error } = useSWR('/panels');
-  const panel = id ? panels.find((item) => item.id === id) : null;
+  const panel = _.find(panels, { id });
 
   const createPanel = (values) => {
     return mutatePanels(

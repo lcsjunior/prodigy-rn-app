@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { IconButton, Menu } from 'react-native-paper';
 import { useLinkTo } from '@react-navigation/native';
 import { useDisclose } from '@hooks/use-disclosure';
+import { StyleSheet } from 'react-native';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -46,6 +47,7 @@ function HomeTabs({ navigation }) {
   return (
     <Tab.Navigator
       shifting
+      barStyle={styles.barStyle}
       screenOptions={{
         headerShown: false,
       }}
@@ -73,5 +75,11 @@ function HomeTabs({ navigation }) {
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  barStyle: {
+    backgroundColor: 'transparent',
+  },
+});
 
 export { HomeTabs };

@@ -29,7 +29,7 @@ function ProgressDialog(props, ref) {
     </Portal>
   );
 }
-const EnhancedProgressDialog = forwardRef(ProgressDialog);
+const WrappedProgressDialog = forwardRef(ProgressDialog);
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { EnhancedProgressDialog as ProgressDialog };
+export { WrappedProgressDialog as ProgressDialog };

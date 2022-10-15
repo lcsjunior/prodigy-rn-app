@@ -2,6 +2,7 @@ import { Button } from '@components/Button';
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { useAuth } from '@hooks/use-auth';
 import { useGlobal } from '@hooks/use-global';
+import { useHeaderHeight } from '@react-navigation/elements';
 import stringHelper from '@utils/string-helper';
 import { StyleSheet } from 'react-native';
 import { Avatar, List } from 'react-native-paper';
@@ -10,6 +11,7 @@ import sleep from 'sleep-promise';
 function SettingsScreen() {
   const { confirm, progress } = useGlobal();
   const { onLogout, user } = useAuth();
+  const headerHeight = useHeaderHeight();
 
   const { username, firstName = '', lastName = '' } = user;
   const fullname = `${firstName || ''} ${lastName || ''}`.trim();
@@ -30,7 +32,9 @@ function SettingsScreen() {
   };
 
   return (
-    <ScreenWrapper contentContainerStyle={styles.container}>
+    <ScreenWrapper
+      contentContainerStyle={[styles.container, { paddingTop: headerHeight }]}
+    >
       <List.Section>
         <List.Subheader>My Account</List.Subheader>
         <List.Item

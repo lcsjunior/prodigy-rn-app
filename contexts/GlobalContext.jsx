@@ -12,6 +12,7 @@ function GlobalProvider({ children }) {
   const alertDialogRef = useRef(null);
   const confirmationDialogRef = useRef(null);
   const progressDialogRef = useRef(null);
+
   const global = useProvideGlobal({
     alertDialogRef,
     confirmationDialogRef,

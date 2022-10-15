@@ -5,6 +5,7 @@ import { Text } from '@components/Text';
 import { useChannels } from '@hooks/use-channels';
 import { useGlobal } from '@hooks/use-global';
 import { useReducerForm } from '@hooks/use-reducer-form';
+import { useHeaderHeight } from '@react-navigation/elements';
 import { messages } from '@utils/messages';
 import stringHelper from '@utils/string-helper';
 import { useEffect, useState } from 'react';
@@ -45,6 +46,7 @@ function ChannelScreen({ navigation, route }) {
     displayName: channel?.displayName,
   });
   const { alert, progress } = useGlobal();
+  const headerHeight = useHeaderHeight();
 
   useEffect(() => {
     navigation.setOptions({
@@ -134,7 +136,10 @@ function ChannelScreen({ navigation, route }) {
   };
 
   return (
-    <ScreenWrapper withScrollView={false} style={styles.container}>
+    <ScreenWrapper
+      withScrollView={false}
+      style={[styles.container, { paddingTop: headerHeight }]}
+    >
       <ScrollView>
         <View>
           <TextInput

@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { Keyboard, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { HelperText, TextInput } from 'react-native-paper';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 function PanelScreen({ navigation, route }) {
   const { params } = route;
@@ -29,6 +30,7 @@ function PanelScreen({ navigation, route }) {
     name: panel?.name,
   });
   const { progress } = useGlobal();
+  const headerHeight = useHeaderHeight();
 
   useEffect(() => {
     navigation.setOptions({
@@ -69,7 +71,10 @@ function PanelScreen({ navigation, route }) {
   };
 
   return (
-    <ScreenWrapper withScrollView={false} style={styles.container}>
+    <ScreenWrapper
+      withScrollView={false}
+      style={[styles.container, { paddingTop: headerHeight }]}
+    >
       <ScrollView>
         <View>
           <TextInput
