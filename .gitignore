@@ -47,3 +47,4 @@ web-build/
 
 # Expo
 .expo-shared
+app.config.js
