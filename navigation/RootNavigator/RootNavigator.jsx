@@ -50,7 +50,7 @@ function RootNavigator() {
           <Stack.Screen
             name="Dashboard"
             component={DashboardScreen}
-            options={{ title: 'Panel' }}
+            options={{ title: '' }}
           />
         </Stack.Group>
       ) : (

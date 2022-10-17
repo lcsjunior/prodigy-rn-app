@@ -1,3 +1,4 @@
+import { ListEmptyComponent } from '@components/ListEmptyComponent';
 import { Text } from '@components/Text';
 import { useRef } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
@@ -18,9 +19,9 @@ function ChannelList({ channels }) {
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderItem}
       ListEmptyComponent={() => (
-        <View style={styles.emptyListWrapper}>
+        <ListEmptyComponent>
           <Text fontSize={18}>You don&#39;t have any channel yet.</Text>
-        </View>
+        </ListEmptyComponent>
       )}
     />
   );
@@ -30,11 +31,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 4,
     flexGrow: 1,
-  },
-  emptyListWrapper: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 

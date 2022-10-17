@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { PanelItem } from './PanelItem';
 import DraggableFlatList from 'react-native-draggable-flatlist';
+import { ListEmptyComponent } from '@components/ListEmptyComponent';
 
 function PanelList({ panels, onDragEnd }) {
   const flatListRef = useRef(null);
@@ -20,9 +21,9 @@ function PanelList({ panels, onDragEnd }) {
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderItem}
       ListEmptyComponent={() => (
-        <View style={styles.emptyListWrapper}>
+        <ListEmptyComponent>
           <Text fontSize={18}>You don&#39;t have any panel yet.</Text>
-        </View>
+        </ListEmptyComponent>
       )}
       onDragEnd={onDragEnd}
     />
@@ -36,11 +37,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexGrow: 1,
-  },
-  emptyListWrapper: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 

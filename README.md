@@ -33,8 +33,14 @@ expo start
 
 <https://github.com/infinitered/reactotron/blob/master/docs/quick-start-react-native.md>
 
-_See:_
-
 ```js
-global.reactotronEnabled;
+global.reactotronEnabled = false;
+```
+
+Caveats:
+
+```bash
+yarn cache clean
+yarn add https://github.com/lcsjunior/react-native-cool-speedometer
+yarn add lcsjunior/react-native-cool-speedometer#master --force
 ```
