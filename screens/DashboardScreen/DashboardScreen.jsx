@@ -5,15 +5,28 @@ import { Text } from '@components/Text';
 import { Widget } from '@components/Widget';
 import { useDashboard } from '@hooks/use-dashboard';
 import { useHeaderHeight } from '@react-navigation/elements';
-import { useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useSWRConfig } from 'swr';
 
 function DashboardScreen({ navigation, route }) {
   const { params } = route;
   const { panel, isLoading } = useDashboard(params?.id);
   const title = panel?.name || '';
   const headerHeight = useHeaderHeight();
+  const { cache } = useSWRConfig();
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log('Focused');
+      return () => {
+        console.log('Unfocused');
+        cache.delete(`/dashboard/${params?.id}`);
+      };
+    }, [cache, params?.id])
+  );
 
   useEffect(() => {
     navigation.setOptions({

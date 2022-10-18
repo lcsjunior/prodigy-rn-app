@@ -16,6 +16,7 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator
+      detachInactiveScreens={true}
       screenOptions={{
         headerTransparent: true,
         headerTitleStyle: {

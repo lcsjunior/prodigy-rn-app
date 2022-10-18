@@ -1,17 +1,10 @@
 import useSWR from 'swr';
 
 const useDashboard = (id) => {
-  const {
-    data: panel,
-    mutate: mutateDashboard,
-    error,
-  } = useSWR(`/dashboard/${id}`);
-
-  const dispose = () => mutateDashboard(null);
+  const { data: panel, error } = useSWR(`/dashboard/${id}`);
 
   return {
     panel,
-    dispose,
     isLoading: !error && !panel,
   };
 };
