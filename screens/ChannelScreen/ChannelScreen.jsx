@@ -27,7 +27,7 @@ function ChannelScreen({ navigation, route }) {
   const hasChData = channel?.chData;
   const title = isNew
     ? 'Add ThingSpeak™ Channel'
-    : channel?.displayName || channel.chData?.name;
+    : channel?.displayName || channel.chData?.name || '';
   const [chDataName, setChDataName] = useState(
     hasChData ? channel.chData.name : null
   );
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   chData: {
-    marginBottom: 24,
+    marginBottom: 22,
     marginLeft: 6,
   },
 });

@@ -1,4 +1,3 @@
-import { HomeTabs } from '@navigation/HomeTabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SignInScreen } from '@screens/SignInScreen';
 import { NotFoundScreen } from '@screens/NotFoundScreen';
@@ -6,8 +5,7 @@ import { useAuth } from '@hooks/use-auth';
 import { SettingsScreen } from '@screens/SettingsScreen';
 import { ChannelScreen } from '@screens/ChannelScreen';
 import { LogoTitle } from '@components/LogoTitle';
-import { PanelScreen } from '@screens/PanelScreen';
-import { DashboardScreen } from '@screens/DashboardScreen';
+import { ChannelListScreen } from '@screens/ChannelListScreen';
 
 const Stack = createStackNavigator();
 
@@ -27,16 +25,11 @@ function RootNavigator() {
       {isSignedIn ? (
         <Stack.Group>
           <Stack.Screen
-            name="Home"
-            component={HomeTabs}
+            name="Channels"
+            component={ChannelListScreen}
             options={{
               headerTitle: (props) => <LogoTitle {...props} />,
             }}
-          />
-          <Stack.Screen
-            name="Settings"
-            component={SettingsScreen}
-            options={{ title: 'Settings' }}
           />
           <Stack.Screen
             name="ChannelDetail"
@@ -44,14 +37,9 @@ function RootNavigator() {
             options={{ title: 'Channel' }}
           />
           <Stack.Screen
-            name="PanelDetail"
-            component={PanelScreen}
-            options={{ title: 'Panel' }}
-          />
-          <Stack.Screen
-            name="Dashboard"
-            component={DashboardScreen}
-            options={{ title: '' }}
+            name="Settings"
+            component={SettingsScreen}
+            options={{ title: 'Settings' }}
           />
         </Stack.Group>
       ) : (

@@ -6,17 +6,11 @@ const defaultParser = {
 
 const config = {
   screens: {
-    Settings: 'settings',
+    Settings: {
+      path: 'settings',
+    },
     ChannelDetail: {
       path: 'channels/:id',
-      ...defaultParser,
-    },
-    PanelDetail: {
-      path: 'panels/:id',
-      ...defaultParser,
-    },
-    Dashboard: {
-      path: 'dashboard/:id',
       ...defaultParser,
     },
     NotFound: '*',

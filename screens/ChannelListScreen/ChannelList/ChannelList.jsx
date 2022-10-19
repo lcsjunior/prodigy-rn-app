@@ -1,20 +1,22 @@
 import { ListEmptyComponent } from '@components/ListEmptyComponent';
 import { Text } from '@components/Text';
 import { useRef } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import DraggableFlatList from 'react-native-draggable-flatlist';
 import { ChannelItem } from './ChannelItem';
 
-function ChannelList({ channels }) {
+function ChannelList({ channels, onDragEnd }) {
   const flatListRef = useRef(null);
 
-  const renderItem = ({ item: channel }) => {
-    return <ChannelItem channel={channel} />;
+  const renderItem = ({ item: channel, drag, isActive }) => {
+    return <ChannelItem channel={channel} drag={drag} isActive={isActive} />;
   };
 
   return (
-    <FlatList
+    <DraggableFlatList
       ref={flatListRef}
-      contentContainerStyle={styles.container}
+      containerStyle={styles.container}
+      contentContainerStyle={styles.contentContainer}
       data={channels}
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderItem}
@@ -23,13 +25,16 @@ function ChannelList({ channels }) {
           <Text fontSize={18}>You don&#39;t have any channel yet.</Text>
         </ListEmptyComponent>
       )}
+      onDragEnd={onDragEnd}
     />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 4,
+    flexGrow: 1,
+  },
+  contentContainer: {
     flexGrow: 1,
   },
 });

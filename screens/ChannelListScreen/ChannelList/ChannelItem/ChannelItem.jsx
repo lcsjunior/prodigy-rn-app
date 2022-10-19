@@ -1,46 +1,55 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useLinkTo } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { Card, useTheme } from 'react-native-paper';
 import _ from 'lodash';
 import { messages } from '@utils/messages';
 import { Text } from '@components/Text';
+import { ScaleDecorator } from 'react-native-draggable-flatlist';
 
-function ChannelItem({ channel }) {
+function ChannelItem({ channel, drag }) {
   const { id, channelId, displayName, chData } = channel;
   const linkTo = useLinkTo();
   const { colors } = useTheme();
   return (
-    <Card
-      style={styles.card}
-      mode="elevated"
-      onPress={() => linkTo(`/channels/${id}`)}
-    >
-      <Card.Content>
-        <View style={styles.titleWrapper}>
-          {_.isEmpty(chData) ? (
-            <>
-              <Ionicons
-                name="warning-outline"
-                size={20}
-                style={styles.warnIcon}
-                color={colors.error}
-              />
-              <Text numberOfLines={1} color="error" fontSize={15} bold>
-                {messages.channelNotFound}
-              </Text>
-            </>
-          ) : (
-            <Text numberOfLines={1} fontSize={15} bold>
-              {displayName || chData?.name}
+    <ScaleDecorator>
+      <TouchableWithoutFeedback
+        onPress={() => linkTo(`/channels/${id}`)}
+        onLongPress={drag}
+      >
+        <Card style={styles.card} mode="elevated">
+          <Card.Content>
+            <View style={styles.titleWrapper}>
+              {_.isEmpty(chData) ? (
+                <>
+                  <Ionicons
+                    name="warning-outline"
+                    size={20}
+                    style={styles.warnIcon}
+                    color={colors.error}
+                  />
+                  <Text numberOfLines={1} color="error" fontSize={15} bold>
+                    {messages.channelNotFound}
+                  </Text>
+                </>
+              ) : (
+                <Text numberOfLines={1} fontSize={15} bold>
+                  {displayName || chData?.name || ''}
+                </Text>
+              )}
+            </View>
+            <Text color="secondary" fontSize={11}>
+              Channel ID: {channelId}
             </Text>
-          )}
-        </View>
-        <Text color="secondary" fontSize={13}>
-          Channel ID: {channelId}
-        </Text>
-      </Card.Content>
-    </Card>
+            {chData?.description && (
+              <Text numberOfLines={3} color="secondary" fontSize={11}>
+                {chData?.description}
+              </Text>
+            )}
+          </Card.Content>
+        </Card>
+      </TouchableWithoutFeedback>
+    </ScaleDecorator>
   );
 }
 

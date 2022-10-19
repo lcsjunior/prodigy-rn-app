@@ -17,6 +17,19 @@ const useChannels = (id) => {
     );
   };
 
+  const bulkUpdateChannel = (sorted) => {
+    return mutateChannels(
+      () => {
+        const records = sorted.map((val) => ({
+          id: val.id,
+        }));
+        baseApi.patch('/channels/bulk', records);
+        return sorted;
+      },
+      { revalidate: false }
+    );
+  };
+
   const updateChannel = (values) => {
     return mutateChannels(
       async () => {
@@ -56,6 +69,7 @@ const useChannels = (id) => {
     channel,
     isLoading: !error && !channels,
     createChannel,
+    bulkUpdateChannel,
     updateChannel,
     deleteChannel,
     checkChannelAccess,
