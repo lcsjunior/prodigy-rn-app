@@ -13,6 +13,10 @@ const config = {
       path: 'channels/:id',
       ...defaultParser,
     },
+    Dashboard: {
+      path: 'channels/:id/dashboard',
+      ...defaultParser,
+    },
     NotFound: '*',
   },
 };

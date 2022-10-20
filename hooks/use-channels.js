@@ -4,7 +4,13 @@ import _ from 'lodash';
 import { thingSpeakApi } from '@libs/thingspeak-api';
 
 const useChannels = (id) => {
-  const { data: channels, mutate: mutateChannels, error } = useSWR('/channels');
+  const {
+    data: channels,
+    error,
+    mutate: mutateChannels,
+  } = useSWR('/channels', {
+    revalidateIfStale: false,
+  });
   const channel = _.find(channels, { id });
 
   const createChannel = (values) => {
@@ -38,7 +44,7 @@ const useChannels = (id) => {
           values
         );
         const filtered = channels.filter((item) => item.id !== id);
-        return _.orderBy([...filtered, updatedChannel], 'id');
+        return _.orderBy([...filtered, updatedChannel], 'sortOrder');
       },
       { revalidate: false }
     );

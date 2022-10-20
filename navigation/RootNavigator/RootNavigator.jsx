@@ -6,6 +6,7 @@ import { SettingsScreen } from '@screens/SettingsScreen';
 import { ChannelScreen } from '@screens/ChannelScreen';
 import { LogoTitle } from '@components/LogoTitle';
 import { ChannelListScreen } from '@screens/ChannelListScreen';
+import { DashboardScreen } from '@screens/DashboardScreen';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ function RootNavigator() {
         headerTransparent: true,
         headerTitleStyle: {
           fontFamily: 'IBMPlexSans_500Medium',
+          fontSize: 16,
         },
       }}
     >
@@ -34,6 +36,11 @@ function RootNavigator() {
           <Stack.Screen
             name="ChannelDetail"
             component={ChannelScreen}
+            options={{ title: 'Channel' }}
+          />
+          <Stack.Screen
+            name="Dashboard"
+            component={DashboardScreen}
             options={{ title: 'Channel' }}
           />
           <Stack.Screen

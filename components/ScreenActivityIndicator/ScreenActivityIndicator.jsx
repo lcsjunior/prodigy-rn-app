@@ -1,14 +1,11 @@
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
-import { Paragraph, useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 
-function ScreenActivityIndicator({ indicatorText }) {
+function ScreenActivityIndicator() {
   const { colors } = useTheme();
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color={colors.primary} />
-      {indicatorText && (
-        <Paragraph style={styles.indicatorText}>{indicatorText}</Paragraph>
-      )}
     </View>
   );
 }
@@ -18,9 +15,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  indicatorText: {
-    marginTop: 12,
   },
 });
 

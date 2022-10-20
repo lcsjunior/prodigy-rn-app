@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { messages } from '@utils/messages';
 import { Text } from '@components/Text';
 import { ScaleDecorator } from 'react-native-draggable-flatlist';
+import { memo } from 'react';
 
 function ChannelItem({ channel, drag }) {
   const { id, channelId, displayName, chData } = channel;
@@ -14,7 +15,7 @@ function ChannelItem({ channel, drag }) {
   return (
     <ScaleDecorator>
       <TouchableWithoutFeedback
-        onPress={() => linkTo(`/channels/${id}`)}
+        onPress={() => linkTo(`/channels/${id}/dashboard`)}
         onLongPress={drag}
       >
         <Card style={styles.card} mode="elevated">
@@ -52,6 +53,7 @@ function ChannelItem({ channel, drag }) {
     </ScaleDecorator>
   );
 }
+const WrappedChannelItem = memo(ChannelItem);
 
 const styles = StyleSheet.create({
   card: {
@@ -67,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { ChannelItem };
+export { WrappedChannelItem as ChannelItem };

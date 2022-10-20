@@ -21,8 +21,8 @@ import * as Font from 'expo-font';
 import { fonts } from '@core/fonts';
 import { ToastProvider } from 'react-native-toast-notifications';
 import { GlobalProvider } from '@contexts/GlobalContext';
-import { fetcher } from '@libs/base-api';
 import { LogBox, Platform, StyleSheet, UIManager } from 'react-native';
+import { swrConfig } from '@utils/swr-config';
 
 if (__DEV__ && global.reactotronEnabled) {
   import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
@@ -87,12 +87,7 @@ function Main() {
 
 export default function App() {
   return (
-    <SWRConfig
-      value={{
-        provider: () => new Map(),
-        fetcher,
-      }}
-    >
+    <SWRConfig value={swrConfig}>
       <AuthProvider>
         <PreferencesProvider>
           <Main />
