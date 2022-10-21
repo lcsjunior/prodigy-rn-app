@@ -5,7 +5,6 @@ import { Text } from '@components/Text';
 import { useChannels } from '@hooks/use-channels';
 import { useGlobal } from '@hooks/use-global';
 import { useReducerForm } from '@hooks/use-reducer-form';
-import { useHeaderHeight } from '@react-navigation/elements';
 import { messages } from '@utils/messages';
 import stringHelper from '@utils/string-helper';
 import { useEffect, useState } from 'react';
@@ -24,13 +23,11 @@ function ChannelScreen({ navigation, route }) {
     checkChannelAccess,
   } = useChannels(params?.id);
   const isNew = !channel;
-  const hasChData = channel?.chData;
+  const hasdata = channel?.data;
   const title = isNew
     ? 'Add ThingSpeak™ Channel'
-    : channel?.displayName || channel.chData?.name || '';
-  const [chDataName, setChDataName] = useState(
-    hasChData ? channel.chData.name : null
-  );
+    : channel?.displayName || channel.data?.name || '';
+  const [dataName, setdataName] = useState(hasdata ? channel.data.name : null);
   const {
     values,
     errors,
@@ -46,7 +43,6 @@ function ChannelScreen({ navigation, route }) {
     displayName: channel?.displayName,
   });
   const { alert, progress } = useGlobal();
-  const headerHeight = useHeaderHeight();
 
   useEffect(() => {
     navigation.setOptions({
@@ -61,7 +57,7 @@ function ChannelScreen({ navigation, route }) {
   const handleChannelEditing = async () => {
     resetFormErrors();
     setFormValues({ displayName: '' });
-    setChDataName('');
+    setdataName('');
     if (stringHelper.isBlank(values.channelId)) {
       setFormErrors({ channelId: messages.isRequired });
     } else {
@@ -84,7 +80,7 @@ function ChannelScreen({ navigation, route }) {
         } else {
           const { name } = resp.data.channel;
           setFormValues({ displayName: name });
-          setChDataName(name);
+          setdataName(name);
         }
       } catch (err) {
         setFormErrors({ channelId: messages.channelNotFound });
@@ -136,10 +132,7 @@ function ChannelScreen({ navigation, route }) {
   };
 
   return (
-    <ScreenWrapper
-      withScrollView={false}
-      style={[styles.container, { paddingTop: headerHeight }]}
-    >
+    <ScreenWrapper withScrollView={false} style={styles.container}>
       <ScrollView>
         <View>
           <TextInput
@@ -159,10 +152,10 @@ function ChannelScreen({ navigation, route }) {
               {errors.channelId}
             </HelperText>
           )}
-          <View style={styles.chData}>
-            {chDataName && (
+          <View style={styles.data}>
+            {dataName && (
               <Text numberOfLines={1} color="white">
-                {chDataName}
+                {dataName}
               </Text>
             )}
           </View>
@@ -219,7 +212,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 8,
   },
-  chData: {
+  data: {
     marginBottom: 22,
     marginLeft: 6,
   },

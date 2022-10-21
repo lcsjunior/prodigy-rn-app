@@ -1,3 +1,4 @@
+import { useHeaderHeight } from '@react-navigation/elements';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,6 +12,7 @@ function ScreenWrapper({
 }) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
+  const headerHeight = useHeaderHeight();
 
   const containerStyle = [
     styles.container,
@@ -19,6 +21,7 @@ function ScreenWrapper({
       paddingBottom: insets.bottom,
       paddingLeft: insets.left,
       paddingRight: insets.left,
+      paddingTop: headerHeight,
     },
   ];
 

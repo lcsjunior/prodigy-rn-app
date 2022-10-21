@@ -9,7 +9,7 @@ import { ScaleDecorator } from 'react-native-draggable-flatlist';
 import { memo } from 'react';
 
 function ChannelItem({ channel, drag }) {
-  const { id, channelId, displayName, chData } = channel;
+  const { id, channelId, displayName, data } = channel;
   const linkTo = useLinkTo();
   const { colors } = useTheme();
   return (
@@ -21,7 +21,7 @@ function ChannelItem({ channel, drag }) {
         <Card style={styles.card} mode="elevated">
           <Card.Content>
             <View style={styles.titleWrapper}>
-              {_.isEmpty(chData) ? (
+              {_.isEmpty(data) ? (
                 <>
                   <Ionicons
                     name="warning-outline"
@@ -35,16 +35,16 @@ function ChannelItem({ channel, drag }) {
                 </>
               ) : (
                 <Text numberOfLines={1} fontSize={15} bold>
-                  {displayName || chData?.name || ''}
+                  {displayName || data?.name || ''}
                 </Text>
               )}
             </View>
             <Text color="secondary" fontSize={11}>
               Channel ID: {channelId}
             </Text>
-            {chData?.description && (
+            {data?.description && (
               <Text numberOfLines={3} color="secondary" fontSize={11}>
-                {chData?.description}
+                {data?.description}
               </Text>
             )}
           </Card.Content>

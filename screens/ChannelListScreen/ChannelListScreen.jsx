@@ -2,7 +2,6 @@ import { ScreenActivityIndicator } from '@components/ScreenActivityIndicator';
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { useChannels } from '@hooks/use-channels';
 import { useDisclose } from '@hooks/use-disclosure';
-import { useHeaderHeight } from '@react-navigation/elements';
 import { useLinkTo } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
@@ -17,7 +16,6 @@ function ChannelListScreen({ navigation }) {
     onToggle: onMenuToggle,
   } = useDisclose();
   const linkTo = useLinkTo();
-  const headerHeight = useHeaderHeight();
 
   useEffect(() => {
     navigation.setOptions({
@@ -54,10 +52,7 @@ function ChannelListScreen({ navigation }) {
   };
 
   return (
-    <ScreenWrapper
-      withScrollView={false}
-      style={[styles.container, { paddingTop: headerHeight }]}
-    >
+    <ScreenWrapper withScrollView={false} style={styles.container}>
       <ChannelList channels={channels} onDragEnd={handleDragEnd} />
       <FAB
         icon="plus"

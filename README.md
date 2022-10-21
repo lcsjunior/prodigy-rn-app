@@ -1,4 +1,4 @@
-# Prodigy IoT - Mobile APP
+# Prodigy IoT - RN APP
 
 ## Useful commands
 
@@ -19,7 +19,7 @@ expo start
 # See React Native Tools Extension
 ```
 
-## DevTools for React Native:
+## DevTools for RN:
 
 **1\.Flipper**
 

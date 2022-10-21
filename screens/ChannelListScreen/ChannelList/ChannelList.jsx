@@ -22,7 +22,7 @@ function ChannelList({ channels, onDragEnd }) {
       renderItem={renderItem}
       ListEmptyComponent={() => (
         <ListEmptyComponent>
-          <Text fontSize={18}>You don&#39;t have any channel yet.</Text>
+          <Text fontSize={16}>You don&#39;t have any channel yet.</Text>
         </ListEmptyComponent>
       )}
       onDragEnd={onDragEnd}

@@ -4,36 +4,25 @@ import { useFeeds } from '@hooks/use-feeds';
 import { useChannels } from '@hooks/use-channels';
 import { useDisclose } from '@hooks/use-disclosure';
 import { useWidgets } from '@hooks/use-widgets';
-import { useHeaderHeight } from '@react-navigation/elements';
-import { useFocusEffect, useLinkTo } from '@react-navigation/native';
-import { useCallback, useEffect } from 'react';
+import { useLinkTo } from '@react-navigation/native';
+import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { IconButton, Menu } from 'react-native-paper';
-import { useSWRConfig } from 'swr';
 import { DashboardList } from './DashboardList';
+import { DashboardProvider } from '@contexts/DashboardContext';
 
 function DashboardScreen({ navigation, route }) {
   const { params } = route;
   const { channel } = useChannels(params?.id);
-  const { widgets, isLoading } = useWidgets({ chId: params?.id });
-  const { feeds, isLoading: isLoadingFeeds } = useFeeds(params?.id);
-  const title = channel?.displayName || channel.chData?.name || '';
+  const { widgets, isLoading } = useWidgets({ chId: channel.id });
+  const { feeds, isLoading: isLoadingFeeds } = useFeeds(channel.id);
+  const title = channel?.displayName || channel.data?.name || '';
   const {
     isOpen: isMenuOpen,
     onClose: onMenuClose,
     onToggle: onMenuToggle,
   } = useDisclose();
   const linkTo = useLinkTo();
-  const headerHeight = useHeaderHeight();
-  const { cache } = useSWRConfig();
-
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        cache.delete(`/channels/${params?.id}/feeds`);
-      };
-    }, [cache, params?.id])
-  );
 
   useEffect(() => {
     navigation.setOptions({
@@ -63,11 +52,15 @@ function DashboardScreen({ navigation, route }) {
   const handleDragEnd = ({ data: sortedWidgets }) => {};
 
   return (
-    <ScreenWrapper
-      withScrollView={false}
-      style={[styles.container, { paddingTop: headerHeight }]}
-    >
-      <DashboardList widgets={widgets} onDragEnd={handleDragEnd} />
+    <ScreenWrapper withScrollView={false} style={styles.container}>
+      <DashboardProvider
+        value={{
+          channel,
+          feeds,
+        }}
+      >
+        <DashboardList widgets={widgets} onDragEnd={handleDragEnd} />
+      </DashboardProvider>
     </ScreenWrapper>
   );
 }

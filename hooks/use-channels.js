@@ -4,13 +4,7 @@ import _ from 'lodash';
 import { thingSpeakApi } from '@libs/thingspeak-api';
 
 const useChannels = (id) => {
-  const {
-    data: channels,
-    error,
-    mutate: mutateChannels,
-  } = useSWR('/channels', {
-    revalidateIfStale: false,
-  });
+  const { data: channels, error, mutate: mutateChannels } = useSWR('/channels');
   const channel = _.find(channels, { id });
 
   const createChannel = (values) => {
