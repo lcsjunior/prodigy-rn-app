@@ -1,22 +1,20 @@
-import { memo } from 'react';
 import { StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
 import { TimeSeries } from './TimeSeries';
 
-const widgetSelection = {
-  series: TimeSeries,
-};
-
 function Widget({ type, ...props }) {
+  const selection = {
+    series: TimeSeries,
+  };
+
   return (
     <Card style={styles.card} mode="elevated">
       <Card.Content style={styles.cardContent}>
-        {widgetSelection[type.slug](props)}
+        {selection[type.slug](props)}
       </Card.Content>
     </Card>
   );
 }
-const WrappedWidget = memo(Widget);
 
 const styles = StyleSheet.create({
   card: {
@@ -28,4 +26,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { WrappedWidget as Widget };
+export { Widget };

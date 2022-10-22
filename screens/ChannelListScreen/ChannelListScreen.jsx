@@ -2,7 +2,6 @@ import { ScreenActivityIndicator } from '@components/ScreenActivityIndicator';
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { useChannels } from '@hooks/use-channels';
 import { useDisclose } from '@hooks/use-disclosure';
-import { useLinkTo } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { FAB, IconButton, Menu } from 'react-native-paper';
@@ -15,7 +14,6 @@ function ChannelListScreen({ navigation }) {
     onClose: onMenuClose,
     onToggle: onMenuToggle,
   } = useDisclose();
-  const linkTo = useLinkTo();
 
   useEffect(() => {
     navigation.setOptions({
@@ -34,14 +32,14 @@ function ChannelListScreen({ navigation }) {
           <Menu.Item
             title="Settings"
             onPress={() => {
-              linkTo('/settings');
+              navigation.navigate('Settings');
               onMenuClose();
             }}
           />
         </Menu>
       ),
     });
-  }, [navigation, isMenuOpen, onMenuClose, onMenuToggle, linkTo]);
+  }, [navigation, isMenuOpen, onMenuClose, onMenuToggle]);
 
   if (isLoading) {
     return <ScreenActivityIndicator />;
@@ -57,7 +55,11 @@ function ChannelListScreen({ navigation }) {
       <FAB
         icon="plus"
         style={styles.fab}
-        onPress={() => linkTo('/channels/-1')}
+        onPress={() =>
+          navigation.navigate('ChannelDetail', {
+            id: -1,
+          })
+        }
       />
     </ScreenWrapper>
   );

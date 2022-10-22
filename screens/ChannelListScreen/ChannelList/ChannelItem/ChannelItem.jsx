@@ -1,5 +1,4 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useLinkTo } from '@react-navigation/native';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { Card, useTheme } from 'react-native-paper';
 import _ from 'lodash';
@@ -7,15 +6,20 @@ import { messages } from '@utils/messages';
 import { Text } from '@components/Text';
 import { ScaleDecorator } from 'react-native-draggable-flatlist';
 import { memo } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 function ChannelItem({ channel, drag }) {
   const { id, channelId, displayName, data } = channel;
-  const linkTo = useLinkTo();
   const { colors } = useTheme();
+  const navigation = useNavigation();
   return (
     <ScaleDecorator>
       <TouchableWithoutFeedback
-        onPress={() => linkTo(`/channels/${id}/dashboard`)}
+        onPress={() =>
+          navigation.navigate('Dashboard', {
+            id,
+          })
+        }
         onLongPress={drag}
       >
         <Card style={styles.card} mode="elevated">

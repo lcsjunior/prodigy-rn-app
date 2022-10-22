@@ -6,7 +6,7 @@ import useSWR, { useSWRConfig } from 'swr';
 const useProvideAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const { data: user, mutate: mutateUser, error } = useSWR('/user');
+  const { data: user, mutate, error } = useSWR('/user');
   const { cache } = useSWRConfig();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const useProvideAuth = () => {
         password,
       });
       cache.clear();
-      await mutateUser();
+      await mutate();
       setIsSignedIn(true);
     } catch (err) {
       console.log(`${messages.fetchOperationFailed}: ${err.message}`);

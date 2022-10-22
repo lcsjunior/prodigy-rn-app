@@ -7,6 +7,7 @@ import { ChannelScreen } from '@screens/ChannelScreen';
 import { LogoTitle } from '@components/LogoTitle';
 import { ChannelListScreen } from '@screens/ChannelListScreen';
 import { DashboardScreen } from '@screens/DashboardScreen';
+import { WidgetScreen } from '@screens/WidgetScreen';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,11 @@ function RootNavigator() {
             name="ChannelDetail"
             component={ChannelScreen}
             options={{ title: 'Channel' }}
+          />
+          <Stack.Screen
+            name="WidgetDetail"
+            component={WidgetScreen}
+            options={{ title: 'Widget' }}
           />
           <Stack.Screen
             name="Dashboard"

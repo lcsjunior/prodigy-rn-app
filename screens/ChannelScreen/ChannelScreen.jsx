@@ -2,9 +2,10 @@ import { DockedFormFooter } from '@components/DockedFormFooter';
 import { ScreenActivityIndicator } from '@components/ScreenActivityIndicator';
 import { ScreenWrapper } from '@components/ScreenWrapper';
 import { Text } from '@components/Text';
-import { useChannels } from '@hooks/use-channels';
+import { useChannel } from '@hooks/use-channel';
 import { useGlobal } from '@hooks/use-global';
 import { useReducerForm } from '@hooks/use-reducer-form';
+import { CommonActions, StackActions } from '@react-navigation/native';
 import { messages } from '@utils/messages';
 import stringHelper from '@utils/string-helper';
 import { useEffect, useState } from 'react';
@@ -21,13 +22,13 @@ function ChannelScreen({ navigation, route }) {
     updateChannel,
     deleteChannel,
     checkChannelAccess,
-  } = useChannels(params?.id);
+  } = useChannel(params?.id);
   const isNew = !channel;
-  const hasdata = channel?.data;
+  const hasData = channel?.data;
   const title = isNew
     ? 'Add ThingSpeak™ Channel'
     : channel?.displayName || channel.data?.name || '';
-  const [dataName, setdataName] = useState(hasdata ? channel.data.name : null);
+  const [dataName, setDataName] = useState(hasData ? channel.data.name : null);
   const {
     values,
     errors,
@@ -57,7 +58,7 @@ function ChannelScreen({ navigation, route }) {
   const handleChannelEditing = async () => {
     resetFormErrors();
     setFormValues({ displayName: '' });
-    setdataName('');
+    setDataName('');
     if (stringHelper.isBlank(values.channelId)) {
       setFormErrors({ channelId: messages.isRequired });
     } else {
@@ -80,7 +81,7 @@ function ChannelScreen({ navigation, route }) {
         } else {
           const { name } = resp.data.channel;
           setFormValues({ displayName: name });
-          setdataName(name);
+          setDataName(name);
         }
       } catch (err) {
         setFormErrors({ channelId: messages.channelNotFound });
@@ -109,11 +110,18 @@ function ChannelScreen({ navigation, route }) {
           });
         } else {
           if (isNew) {
-            await createChannel(values);
+            const newChannel = await createChannel(values);
+            navigation.dispatch({
+              ...StackActions.replace('Dashboard', {
+                id: newChannel.id,
+              }),
+              source: route.key,
+              target: navigation.getState().key,
+            });
           } else {
             await updateChannel(values);
+            navigation.goBack();
           }
-          navigation.goBack();
         }
       } catch (err) {
         setFormErrors({ channelId: messages.channelNotFound });
@@ -122,11 +130,16 @@ function ChannelScreen({ navigation, route }) {
     }
   };
 
-  const handleDeletePress = async () => {
+  const handleDeletePress = () => {
     progress.show();
     try {
-      await deleteChannel();
-      navigation.goBack();
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{ name: 'Channels' }],
+        })
+      );
+      deleteChannel();
     } catch (err) {}
     progress.hide();
   };
