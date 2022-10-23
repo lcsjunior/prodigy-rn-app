@@ -32,6 +32,7 @@ function DashboardList({ widgets, onDragEnd }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexGrow: 1,
   },
   contentContainer: {
