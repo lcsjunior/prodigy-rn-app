@@ -12,28 +12,34 @@ import {
   VictoryLine,
   VictoryScatter,
   VictoryTooltip,
+  createContainer,
   VictoryVoronoiContainer,
 } from 'victory-native';
 import _ from 'lodash';
 
+const VictoryZoomVoronoiContainer = createContainer('zoom', 'voronoi');
+
 const createDataSeries = (fields, channel, feeds) => {
-  const dataSeries = [];
-  fields.forEach((field) => {
-    const id = field.fieldId;
-    const name = channel.data[`field${id}`];
-    const data = feeds.map((feed) => ({
-      x: fromUnixTime(feed.created_at),
-      y: feed[`field${id}`] ?? null,
-    }));
-    const color = presetColors[id - 1];
-    dataSeries.push({
-      id,
-      name,
-      data,
-      color,
+  if (fields && channel && feeds) {
+    const dataSeries = [];
+    fields.forEach((field) => {
+      const id = field.fieldId;
+      const name = channel.data[`field${id}`];
+      const data = feeds.map((feed) => ({
+        x: fromUnixTime(feed.created_at),
+        y: feed[`field${id}`] ?? null,
+      }));
+      const color = presetColors[id - 1];
+      dataSeries.push({
+        id,
+        name,
+        data,
+        color,
+      });
     });
-  });
-  return dataSeries;
+    return dataSeries;
+  }
+  return [];
 };
 
 function TimeSeries({ id, displayName, fields }) {
@@ -60,6 +66,7 @@ function TimeSeries({ id, displayName, fields }) {
           labels={({ datum }) =>
             `${format(datum.x, 'MMM dd, yyyy HH:mm')}\n ${datum.y}`
           }
+          voronoiBlacklist={['scatter']}
         />
       }
       scale={{ x: 'time', y: 'linear' }}
@@ -97,22 +104,27 @@ function TimeSeries({ id, displayName, fields }) {
           axis: styles.axis,
           grid: styles.grid,
         }}
-        tickFormat={(y) => _.round(y, 2)}
+        tickFormat={(y) => _.round(y, 1)}
       />
       {dataSeries.map((serie) => (
         <VictoryGroup key={serie.id}>
           <VictoryLine
             interpolation="monotoneX"
             name="line"
+            // animate={{
+            //   duration: 2000,
+            //   onLoad: { duration: 1000 },
+            // }}
             style={{
               data: {
                 stroke: serie.color,
-                strokeWidth: 1.5,
+                strokeWidth: 1,
               },
             }}
             data={serie.data}
           />
           <VictoryScatter
+            name="scatter"
             data={[_.last(serie.data)]}
             size={3}
             style={{
@@ -125,6 +137,7 @@ function TimeSeries({ id, displayName, fields }) {
             }}
             labels={({ datum }) => datum.y}
             labelComponent={<VictoryLabel />}
+            tickFormat={(y) => _.round(y, 2)}
           />
         </VictoryGroup>
       ))}
@@ -160,7 +173,7 @@ const styles = StyleSheet.create({
   },
   scatterLabels: {
     fill: '#f4f6fb',
-    fontSize: 10,
+    fontSize: 8,
   },
   displayName: {
     fill: '#f4f6fb',

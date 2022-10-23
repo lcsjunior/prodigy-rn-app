@@ -15,8 +15,8 @@ import { useSWRConfig } from 'swr';
 function DashboardScreen({ navigation, route }) {
   const { params } = route;
   const { channel } = useChannel(params?.id);
-  const { widgets, isLoading } = useWidgets(channel?.id);
-  const { feeds, isLoading: isLoadingFeeds } = useFeeds(channel?.id);
+  const { widgets, isLoading } = useWidgets(params?.id);
+  const { feeds, isLoading: isLoadingFeeds } = useFeeds(params?.id);
   const title = channel?.displayName || channel?.data.name || '';
   const {
     isOpen: isMenuOpen,
