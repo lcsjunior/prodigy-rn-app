@@ -1,32 +1,21 @@
 import { DockedFormFooter } from '@components/DockedFormFooter';
 import { ScreenActivityIndicator } from '@components/ScreenActivityIndicator';
 import { ScreenWrapper } from '@components/ScreenWrapper';
-import { Text } from '@components/Text';
 import { useChannel } from '@hooks/use-channel';
 import { useGlobal } from '@hooks/use-global';
 import { useReducerForm } from '@hooks/use-reducer-form';
 import { useWidget } from '@hooks/use-widget';
 import { useWidgetTypes } from '@hooks/use-widget-types';
-import { useWidgets } from '@hooks/use-widgets';
-import { StackActions } from '@react-navigation/native';
-import { messages } from '@utils/messages';
 import stringHelper from '@utils/string-helper';
 import { useEffect, useState } from 'react';
-import { Keyboard, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import {
-  Checkbox,
-  Divider,
-  HelperText,
-  List,
-  RadioButton,
-  TextInput,
-} from 'react-native-paper';
+import { Checkbox, Divider, List, RadioButton } from 'react-native-paper';
 import _ from 'lodash';
 
 function WidgetScreen({ navigation, route }) {
   const { params } = route;
-  const { channel, isLoading, fields } = useChannel(params?.chId);
+  const { isLoading, fields } = useChannel(params?.chId);
   const { types, isLoading: isLoadingTypes } = useWidgetTypes();
   const {
     widget,
@@ -37,15 +26,7 @@ function WidgetScreen({ navigation, route }) {
   } = useWidget(params?.chId, params?.id);
   const isNew = !widget;
   const title = isNew ? 'Add New Widget' : 'Widget Settings';
-  const {
-    values,
-    errors,
-    setFormValues,
-    setFormErrors,
-    resetFormErrors,
-    handleInputChange,
-    handleInputFocus,
-  } = useReducerForm({
+  const { values, setFormValues, handleInputChange } = useReducerForm({
     typeId: isNew ? '' : widget.typeId,
     fields: isNew ? '' : widget.fields?.map((field) => field.fieldId),
   });

@@ -87,6 +87,7 @@ function DashboardScreen({ navigation, route }) {
     title,
     channel,
     isLoadingFeeds,
+    params?.id,
   ]);
 
   if (isLoading || isLoadingFeeds) {
