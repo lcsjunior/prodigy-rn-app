@@ -15,8 +15,8 @@ import { useSWRConfig } from 'swr';
 function DashboardScreen({ navigation, route }) {
   const { params } = route;
   const { channel } = useChannel(params?.id);
-  const { widgets, isLoading } = useWidgets(params?.id);
-  const { feeds, isLoading: isLoadingFeeds } = useFeeds(params?.id);
+  const { widgets, isLoading } = useWidgets(channel?.id);
+  const { feeds, isLoading: isLoadingFeeds } = useFeeds(channel?.id);
   const title = channel?.displayName || channel?.data.name || '';
   const {
     isOpen: isMenuOpen,
@@ -25,13 +25,13 @@ function DashboardScreen({ navigation, route }) {
   } = useDisclose();
   const { cache } = useSWRConfig();
 
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        cache.delete(`/widgets?chId=${params?.id}`);
-      };
-    }, [cache, params])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     return () => {
+  //       cache.delete(`/widgets?chId=${params?.id}`);
+  //     };
+  //   }, [cache, params])
+  // );
 
   useEffect(() => {
     navigation.setOptions({
@@ -46,6 +46,7 @@ function DashboardScreen({ navigation, route }) {
                   size={24}
                   onPress={() => {
                     navigation.navigate('WidgetDetail', {
+                      chId: params?.id,
                       id: -1,
                     });
                     onMenuClose();

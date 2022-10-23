@@ -7,7 +7,7 @@ const initialState = {
 
 const prepareValues = (values) => {
   for (const key in values) {
-    values[key] = values[key]?.toString();
+    values[key] = values[key]?.toString() || '';
   }
   return values;
 };

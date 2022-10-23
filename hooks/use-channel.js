@@ -1,9 +1,14 @@
 import { baseApi } from '@libs/base-api';
 import useSWR from 'swr';
 import { thingSpeakApi } from '@libs/thingspeak-api';
+import _ from 'lodash';
 
 const useChannel = (id) => {
   const { data: channel, error, mutate } = useSWR(`/channels/${id}`);
+  const fields = _.pickBy(
+    channel?.data,
+    (value, key) => key.substring(0, 5) === 'field'
+  );
 
   const createChannel = async (values) => {
     const { data: newChannel } = await baseApi.post('/channels', values);
@@ -34,6 +39,7 @@ const useChannel = (id) => {
 
   return {
     channel,
+    fields,
     isLoading: !error && !channel,
     createChannel,
     updateChannel,

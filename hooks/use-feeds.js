@@ -10,7 +10,7 @@ const useFeeds = (id) => {
     data: feeds,
     error,
     mutate,
-  } = useSWR(`/channels/${id}/feeds?round=2&results=1000`);
+  } = useSWR(id ? `/channels/${id}/feeds?round=2&results=1000` : null);
   const lastEntryRef = useRef(null);
   const [lastEntry, setLastEntry] = useState(null);
 
