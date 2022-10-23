@@ -10,7 +10,11 @@ import { DashboardList } from './DashboardList';
 import { DashboardProvider } from '@contexts/DashboardContext';
 import { useChannel } from '@hooks/use-channel';
 import { Text } from '@components/Text';
-import { formatDistanceToNow, fromUnixTime } from 'date-fns';
+import {
+  formatDistanceToNow,
+  formatDistanceToNowStrict,
+  fromUnixTime,
+} from 'date-fns';
 
 function DashboardScreen({ navigation, route }) {
   const { params } = route;
@@ -106,7 +110,7 @@ function DashboardScreen({ navigation, route }) {
         <Text fontSize={10} style={{ marginHorizontal: 6 }}>
           Last entry:{' '}
           {lastEntry?.created_at
-            ? formatDistanceToNow(fromUnixTime(lastEntry?.created_at))
+            ? formatDistanceToNowStrict(fromUnixTime(lastEntry?.created_at))
             : '---'}
         </Text>
       </View>
